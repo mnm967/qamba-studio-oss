@@ -10,7 +10,7 @@
 //   * they stage into the render with OPPOSITE instructions. A user still is
 //     a `look` (its framing explicitly disclaimed) or a `start_frame`; a panel
 //     is a `scene_ref`, framing INTENDED. "A scene image's role is never
-//     inferred" (CLAUDE.md) — so the role is stored, not guessed from where
+//     inferred" — so the role is stored, not guessed from where
 //     the picture came from.
 // Two keys, then. But one surface and one generator: every place that shows a
 // beat's picture reads `still_asset_id ?? panel_asset_id`, the same precedence

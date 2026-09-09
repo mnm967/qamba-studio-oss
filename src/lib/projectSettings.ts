@@ -277,8 +277,8 @@ export async function saveProjectSettings(
  *  1. THE READ'S ERROR WAS DISCARDED (`const { data } = ...`). This is a
  *     read-modify-write over the whole `settings` jsonb, so a failed read did
  *     not merely lose context — it made `next` the patch ALONE and wrote that
- *     over every other setting the project had. Same shape CLAUDE.md already
- *     records for a bad column name in a `select`: the client hands a failure
+ *     over every other setting the project had. Same shape as a bad column
+ *     name in a `select`: the client hands a failure
  *     back as data-less success, so it degrades a feature instead of breaking
  *     it.
  *  2. THE UPDATE WAS NOT VERIFIED. PostgREST answers an UPDATE that matched no

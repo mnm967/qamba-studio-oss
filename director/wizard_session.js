@@ -328,7 +328,7 @@ What to do here:
  *
  * The point of the still is that it shows the *cast the blocks will render*, so
  * identity refs come first and the location rides last. Four is the ceiling —
- * `Krea2EditRebalance` takes no more (CLAUDE.md), and a fifth would be dropped
+ * `Krea2EditRebalance` takes no more, and a fifth would be dropped
  * silently by the node rather than by us.
  *
  * @param {{castIds?: string[], environmentId?: string|null,

@@ -3,7 +3,7 @@
 // plan. The inspector's old one-line input hid that entirely: you couldn't
 // see what you were editing, couldn't add image refs, and the queue row it
 // produced said only "AI edit". Portals to <body> — a fixed overlay inside
-// the timeline panels would be clipped by their overflow (see CLAUDE.md).
+// the timeline panels would be clipped by their overflow.
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { Film, ImagePlus, Trash2, Wand2, X } from "lucide-react";

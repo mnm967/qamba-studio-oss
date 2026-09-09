@@ -987,8 +987,8 @@ export const FAMILIES: ModelFamily[] = [
     // Also no step distill, and for the same measured reason as the 1.3B: the
     // LightX2V file is 5120-wide (14B) and the 5B is 3072. Read straight off
     // the safetensors header — `blocks.0.cross_attn.k.lora_down.weight` is
-    // [32, 5120] — the same shape-check discipline CLAUDE.md uses for H3
-    // adapters, and cheaper than discovering it after a 30-step sample.
+    // [32, 5120] — the same shape-check discipline used for H3 adapters, and
+    // cheaper than discovering it after a 30-step sample.
   },
   {
     id: "wan22-14b", name: "Wan 2.2 · I2V 14B", media: "video", license: "Apache 2.0",

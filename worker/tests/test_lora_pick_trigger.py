@@ -6,7 +6,7 @@ it reaches `lora_stack` as a bare `*.safetensors` filename through the escape
 hatch there — so the only place its token can travel is on the pick itself.
 
 That matters because a trigger-less adapter of this kind LOADS CLEANLY AND DOES
-NOTHING (CLAUDE.md records `grit` as the first of that shape), which is the
+NOTHING — it loads, logs nothing and contributes nothing — which is the
 silent downgrade this codebase keeps naming.
 """
 import resolve as R

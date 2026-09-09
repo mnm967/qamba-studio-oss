@@ -106,7 +106,7 @@ export interface ComfyStatus {
  * Is an engine listening, and what is it.
  *
  * A REFUSED CONNECTION IS NOT "NO COMFYUI", and the worker learned this the
- * expensive way (CLAUDE.md: `_NODE_TTL_UNREACHABLE`) — ComfyUI takes minutes to
+ * expensive way (`_NODE_TTL_UNREACHABLE`) — ComfyUI takes minutes to
  * start listening, so a probe during startup reports absence for a box that is
  * merely booting. Callers get the distinction in `error` and should retry
  * rather than concluding anything.

@@ -1527,8 +1527,8 @@ def _panel_prompt(spec, shape="stack", family=None):
     order — so panels of one scene still agree even though they are separate
     renders. No word cap: this goes to the reference-editing families, which
     read instructions rather than tag stacks."""
-    # H3 is the one family with a published REFERENCE format, and CLAUDE.md
-    # already records the measurement: prose is right for a SHEET (one subject,
+    # H3 is the one family with a published REFERENCE format, and the
+    # measurement is recorded: prose is right for a SHEET (one subject,
     # no composition to state) and wrong for a PANEL, which stages several
     # references that have to be told apart.
     if family == "h3":

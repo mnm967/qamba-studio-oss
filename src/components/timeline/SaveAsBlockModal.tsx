@@ -86,8 +86,8 @@ export default function SaveAsBlockModal({
   // every `position: fixed` descendant. Mounted where it is used, the scrim
   // resolved against the SLAB and opened inside the timeline instead of over
   // the app (measured: 330x358 against a 416x361 viewport). `BlockActionModal`
-  // portals from this same mount point for exactly this reason; the rule is in
-  // CLAUDE.md's Gotchas, one layer in (`.ns-l3`).
+  // portals from this same mount point for exactly this reason, and the same
+  // rule applies one layer in (`.ns-l3`).
   return createPortal(
     <ModalShell
       icon={<CopyPlus size={15} />}

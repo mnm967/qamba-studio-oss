@@ -433,7 +433,7 @@ export async function getModelImages(
  *
  * `/api/download/models/<id>` takes a model VERSION id, and a FILE id in that
  * slot does not 404 — it serves a DIFFERENT model's weights with a 200 and a
- * valid content type (CLAUDE.md documents the 597MB-arriving-as-61MB case). So
+ * valid content type — measured once as a 597MB file arriving as 61MB. So
  * the version id is what goes in the path and the file is selected by query,
  * never by swapping the id.
  */

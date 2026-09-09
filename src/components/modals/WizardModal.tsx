@@ -883,8 +883,8 @@ const RES_DIMS: Record<"480p" | "704p" | "720p" | "1080p", { w: number; h: numbe
 /** The episode's target length, in seconds, as the Duration slider offers it:
  * 90s to 15 minutes in 30-second steps. It is a TARGET rather than a limit —
  * the writer's beats are what decide the real length, and the measured-dialogue
- * pass only ever GROWS a shot (see "A 5-MINUTE BRIEF CAME BACK AS A 7.8-MINUTE
- * EPISODE" in CLAUDE.md) — so the grid exists to keep the control and the value
+ * pass only ever GROWS a shot — a 5-minute brief came back as a 7.8-minute
+ * episode that way — so the grid exists to keep the control and the value
  * agreeing, not to constrain the plan.
  *
  * A saved draft can carry a length from before this grid (the old slider ran
@@ -919,8 +919,8 @@ const RES_HINT: Record<keyof typeof RES_DIMS, string> = {
  *  reviewer can run on Haiku — which makes an OpenAI model name sent with a
  *  Claude backend a 404 on the plan's FIRST call, and an absent `backend`
  *  resolves through `pick_backend` to Claude whenever the worker holds an
- *  Anthropic key. That is CLAUDE.md's own "backend and llm_model must be set
- *  TOGETHER" rule, which main's Haiku change made sharper rather than moot.
+ *  Anthropic key. That is the "backend and llm_model must be set TOGETHER"
+ *  rule, which the Haiku default made sharper rather than moot.
  *  Ollama ignores it either way (its branch sends `OLLAMA_MODEL`). */
 const PIPELINE_MODEL = "gpt-5.6-terra";
 const pipelineModel = (id: string | undefined): string | undefined =>
@@ -1267,8 +1267,8 @@ export default function WizardModal({ project, episode }: { project: Project; ep
    *  plain `H3_MODEL`, 20 steps) and, with no `dims`, ignored the Resolution
    *  picker too (`handle_master_pass` falls through to its 1280x720 default).
    *  Both are silent: the episode renders, on the wrong checkpoint, at a
-   *  resolution nobody chose — the same failure CLAUDE.md records under
-   *  "A RE-RENDER USED TO CHANGE THE RESOLUTION", arriving from the other end.
+   *  resolution nobody chose — the same failure as a re-render silently
+   *  changing the resolution, arriving from the other end.
    *
    *  The hosted option has no model_map entry, so it must not send a key the
    *  worker would fail to resolve — hence the `-local` test. `refine` sits

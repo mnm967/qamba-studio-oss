@@ -9,7 +9,7 @@
 // THE SNAPSHOT MUST BE A STABLE REFERENCE. `byokSnapshot()` returns the stored
 // object and every write REPLACES it; building one on read makes the store look
 // changed on every render, which is the render/read/render loop that blanked
-// the storage sheet (see `autoStateFor` in CLAUDE.md).
+// the storage sheet.
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import {
   byokSnapshot, keyedProviders, refreshByok, subscribeByok, type ByokState,

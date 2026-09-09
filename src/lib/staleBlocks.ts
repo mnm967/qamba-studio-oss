@@ -68,8 +68,8 @@ export interface ChainRow {
  *  A chained block opens on its predecessor's final frame, and the envelope
  *  declares that frame `fully_preserved` — so re-rendering b8 while b7 is still
  *  stale continues from the take b7 is about to replace, and whatever b7
- *  invented stays canon in b8. That is the same mechanism as CLAUDE.md's
- *  "dressing the plate does not reach a chained block", one layer up, and it is
+ *  invented stays canon in b8. That is the same mechanism as dressing a
+ *  location plate not reaching a chained block, one layer up, and it is
  *  invisible in the output: b8 renders fine, from the wrong opening frame.
  *
  *  Reported rather than force-included: a partial re-render is a legitimate

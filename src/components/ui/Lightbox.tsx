@@ -1,5 +1,5 @@
 // Full-bleed image viewer, shared by the Bible entry modal and the one-shot
-// wizard. Portalled to <body> for the reason in CLAUDE.md: `.ns-l3` carries a
+// wizard. Portalled to <body> for the usual reason: `.ns-l3` carries a
 // backdrop-filter, which makes any modal a containing block for fixed
 // descendants — a viewer rendered inside one opens *within* the panel that
 // opened it, clipped by its overflow.

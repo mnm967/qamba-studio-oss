@@ -187,7 +187,7 @@ test("the defaults come off the row, and fall back where it is silent", () => {
 
 test("the queue row says what it is", () => {
   // `jobLabel` renders payload.label on every queue surface; a row saying only
-  // its kind is the regression CLAUDE.md names.
+  // its kind is the regression this guards against.
   assert.match(v2aLabel({ blockLabel: "Block 4", prompt: "boots on gravel" }),
                /^Block 4 audio · boots on gravel$/);
   assert.equal(v2aLabel({ prompt: "" }), "Video → audio");

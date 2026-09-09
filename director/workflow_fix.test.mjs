@@ -15,7 +15,7 @@ import { MAX_CLASSES, MAX_FAULTS, fixSystem, fixUser, parseFixReply } from "./wo
 
 const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "..");
 // CRLF: git's default on Windows is autocrlf, and a source-parsing test that
-// does not normalise silently matches nothing — the trap CLAUDE.md records.
+// does not normalise silently matches nothing.
 const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8").replace(/\r\n/g, "\n");
 
 test("the system prompt forbids the failure that matters", () => {

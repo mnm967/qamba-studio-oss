@@ -5,7 +5,7 @@
  * THE PROBLEM. `plan_storyboard` queued reference sheets, storyboard panels
  * and a voice clip per speaking character unconditionally — one gate,
  * `plan_refs`, that nothing in the wizard ever sent. The reasoning was sound
- * and is written down in CLAUDE.md: the references measure under a dollar
+ * and is worth restating: the references measure under a dollar
  * against ~$20 for the render, so the expensive thing to gate is the render.
  *
  * What that costs is the REVIEW. A one-shot with a model pick that cannot

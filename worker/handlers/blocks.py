@@ -882,7 +882,7 @@ def ref_plan_for(block, ctx, params=None):
     # drew all six — measured, the extra four turned up standing in the
     # background of an extreme close-up.
     #
-    # The pronoun case CLAUDE.md warns about is handled by the UNION being
+    # The pronoun case is handled by the UNION being
     # per-beat with a per-beat fallback: a beat whose own text names nobody
     # ("the two stand in silence") contributes its whole roster, so the party
     # referred to only by a pronoun keeps its sheet. What gets dropped is a

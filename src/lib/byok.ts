@@ -54,7 +54,7 @@ const subs = new Set<(s: ByokState) => void>();
  *  `useSyncExternalStore` compares with Object.is on every render, so a
  *  snapshot rebuilt on read is "changed" every time — render, read, render,
  *  "Maximum update depth exceeded", and the tree unmounts. The storage sheet
- *  learned this the hard way; see `autoStateFor` in CLAUDE.md. */
+ *  learned this the hard way. */
 export const byokSnapshot = (): ByokState => state;
 
 export function subscribeByok(fn: (s: ByokState) => void): () => void {
