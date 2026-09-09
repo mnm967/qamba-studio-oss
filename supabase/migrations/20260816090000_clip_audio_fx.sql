@@ -1,0 +1,14 @@
+-- Per-clip audio effects: an ordered chain of [{id, params}, ...].
+--
+-- Deliberately NOT folded into `clips.ops`. That column is the video op list
+-- the renderer walks in `build_clip_filter`, it is keyed into the intermediate
+-- cache's `op_hash`, and an audio effect belongs to a different stage of the
+-- pipeline entirely (the mix, not the per-clip picture render). One column
+-- holding both would mean every audio tweak invalidated a video intermediate.
+--
+-- The chain is applied in array order by BOTH engines: Tuna in the preview
+-- (src/lib/audioGraph.ts) and ffmpeg in the render (worker/audio_fx.py). The
+-- stored parameter values are engine-neutral and human — dB, Hz, ms, 0..1 —
+-- and each side converts; see src/lib/audioFx.ts for the catalog that defines
+-- them.
+alter table clips add column if not exists audio_fx jsonb not null default '[]';

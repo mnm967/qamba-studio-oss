@@ -1,0 +1,1369 @@
+{
+  "_generated_by": "scripts/gen_panel_golden.py — do not hand-edit",
+  "_pins": "src/lib/panelPrompt.ts against worker/image_prompt.py",
+  "cases": [
+    {
+      "name": "plate and frame",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a wide lateral tracking shot at low angle",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "plate": "master"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup: a wide view of the whole place, with the figures small in the frame, the camera is below the subject, looking up. The reference plate establishes what the place is made of, not where this camera stands. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "plate, no frame",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "the camera drifts",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "plate": "alt_angle"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup. The reference plate establishes what the place is made of, not where this camera stands. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "frame, no plate",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "an extreme wide shot at high angle",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "A very wide view where the place itself is the subject and any figures are small and distant, the camera is above the subject, looking down. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "neither",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "the camera drifts",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": null
+      },
+      "prompt": "Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "plate and frame, no angle",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a wide shot",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "plate": "detail"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup: a wide view of the whole place, with the figures small in the frame. The reference plate establishes what the place is made of, not where this camera stands. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "over-the-shoulder close-up",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "an over-the-shoulder close-up on Rei",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "Framed past one figure's shoulder onto the other. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "insert",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "an insert on the polaroid",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The object alone, filling the frame. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "two-shot",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a two-shot, eye level",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "Both figures together in frame from the waist up, the camera is at the subject's eye level. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "extreme close-up",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "an extreme close-up of her hand",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "An extreme close-up of a single detail filling the frame. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "medium close-up",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium close-up, worm's eye",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "A medium close-up, head and shoulders, the camera is at ground level, looking steeply up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "full shot",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a full shot from overhead",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "A full-length view showing the figures head to foot with the place around them, seen from directly overhead, looking straight down. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "establishing",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a wide establishing shot",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "A wide establishing view of the whole place, with the figures small in the frame. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "size overrides camera",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "an extreme wide shot",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "size": "a close-up"
+      },
+      "prompt": "A close-up where the face fills most of the frame. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "unknown camera",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "the camera does something new",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "no cast",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "two named",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          },
+          {
+            "name": "Miko",
+            "identity": "cropped silver hair, grey coat"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei and Miko: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "four named, cut to three",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          },
+          {
+            "name": "Miko",
+            "identity": "cropped silver hair, grey coat"
+          },
+          {
+            "name": "Astronaut Rei",
+            "identity": "orange EVA suit, white-and-grey helmet"
+          },
+          {
+            "name": "Guide Rei",
+            "identity": "long brown coat, travel-worn boots"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei and Miko and Astronaut Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "a blank name is dropped",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "  "
+          },
+          {
+            "name": "Miko",
+            "identity": "cropped silver hair, grey coat"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Miko: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "long location identity (cap 22, clause cut)",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "plate": "master"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup: the figures from the waist up. The reference plate establishes what the place is made of, not where this camera stands. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "long action (cap 30)",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei lands on the flooded ground several meters from Astronaut Rei and stamps one boot hard, and a blue-violet crystallization wave races outward through the water and beneath the street surface, visible as glowing crystal veins under the transparent floodwater",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei lands on the flooded ground several meters from Astronaut Rei and stamps one boot hard, and a blue-violet crystallization wave races outward through the water and beneath the. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "long palette (cap 8)",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "world": {
+          "palette": "indigo and rose, sodium amber, wet asphalt black, with cold cyan rim light and a bloom on every practical"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame, indigo and rose, sodium amber, wet asphalt black."
+    },
+    {
+      "name": "short palette",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "world": {
+          "palette": "indigo and rose"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame, indigo and rose."
+    },
+    {
+      "name": "world with era only",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "world": {
+          "era": "1974"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "action with trailing dots",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "She turns away...",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: She turns away. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "empty action falls back",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "   ",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: the scene continues. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "style beginning with a vowel",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "style beginning with a consonant",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "cinematic 35mm",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of a cinematic 35mm storyboard frame."
+    },
+    {
+      "name": "empty style falls back",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of a cinematic storyboard frame."
+    },
+    {
+      "name": "style beginning uppercase",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "Ink-wash",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        }
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an Ink-wash storyboard frame."
+    },
+    {
+      "name": "time of day",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "time_of_day": "just before dawn"
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. It is just before dawn. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "messy whitespace everywhere",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": " anime  ",
+        "camera": "a medium shot, holding still",
+        "action": "  she   turns \n away  ",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "time_of_day": "  night "
+      },
+      "prompt": "The figures from the waist up. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: she turns away. It is night. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "location with no identity",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Rooftop"
+        },
+        "plate": "master"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup: the figures from the waist up. The reference plate establishes what the place is made of, not where this camera stands. The location is Rooftop. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "location is not a dict",
+      "family": "openai",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a medium shot, holding still",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": "Rooftop"
+      },
+      "prompt": "The figures from the waist up. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    },
+    {
+      "name": "google composes identically",
+      "family": "google",
+      "spec": {
+        "kind": "panel",
+        "style": "anime",
+        "camera": "a wide shot at low angle",
+        "action": "Villian Rei phases through the spinning car",
+        "cast": [
+          {
+            "name": "Villian Rei",
+            "identity": "short black bob with a white streak, red jacket"
+          }
+        ],
+        "location": {
+          "name": "Flooded Street",
+          "identity": "ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles"
+        },
+        "plate": "master"
+      },
+      "prompt": "Reposition the camera inside this location and shoot a new setup: a wide view of the whole place, with the figures small in the frame, the camera is below the subject, looking up. The reference plate establishes what the place is made of, not where this camera stands. The location is Flooded Street, ankle-deep black water under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between. Villian Rei: Villian Rei phases through the spinning car. In the style of an anime storyboard frame."
+    }
+  ],
+  "finalize": [
+    {
+      "name": "nothing resolved to nothing",
+      "spec": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "refs": [
+          "a",
+          "b"
+        ],
+        "cast_complete": true
+      },
+      "planned": [
+        {
+          "entry_id": "e-rei",
+          "roles": [
+            "turnaround"
+          ]
+        },
+        {
+          "entry_id": "e-street",
+          "roles": [
+            "master"
+          ]
+        }
+      ],
+      "taken": [
+        {
+          "entry_id": "e-rei",
+          "role": "turnaround"
+        },
+        {
+          "entry_id": "e-street",
+          "role": "master"
+        }
+      ],
+      "has_refs": true,
+      "out": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "refs": [
+          "a",
+          "b"
+        ],
+        "cast_complete": true,
+        "from_ref": true
+      }
+    },
+    {
+      "name": "the plate falls back to what is on file",
+      "spec": {
+        "plate": "alt_angle",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ]
+      },
+      "planned": [
+        {
+          "entry_id": "e-rei"
+        },
+        {
+          "entry_id": "e-street"
+        }
+      ],
+      "taken": [
+        {
+          "entry_id": "e-rei",
+          "role": "turnaround"
+        },
+        {
+          "entry_id": "e-street",
+          "role": "master"
+        }
+      ],
+      "has_refs": true,
+      "out": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "from_ref": true
+      }
+    },
+    {
+      "name": "a dropped subject prunes the envelope",
+      "spec": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "refs": [
+          "a",
+          "b"
+        ],
+        "cast_complete": true
+      },
+      "planned": [
+        {
+          "entry_id": "e-ghost"
+        },
+        {
+          "entry_id": "e-street"
+        }
+      ],
+      "taken": [
+        {
+          "entry_id": "e-street",
+          "role": "master"
+        }
+      ],
+      "has_refs": true,
+      "out": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "refs": [
+          "b"
+        ],
+        "from_ref": true
+      }
+    },
+    {
+      "name": "no refs means no from_ref",
+      "spec": {
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ]
+      },
+      "planned": [],
+      "taken": [],
+      "has_refs": false,
+      "out": {
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ]
+      }
+    },
+    {
+      "name": "a mismatched length is left alone",
+      "spec": {
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "cast_complete": true
+      },
+      "planned": [
+        {
+          "entry_id": "e-rei"
+        }
+      ],
+      "taken": [
+        {
+          "entry_id": "e-rei",
+          "role": "face"
+        }
+      ],
+      "has_refs": true,
+      "out": {
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "cast_complete": true,
+        "from_ref": true
+      }
+    },
+    {
+      "name": "a character role never corrects the plate",
+      "spec": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ]
+      },
+      "planned": [
+        {
+          "entry_id": "e-rei"
+        },
+        {
+          "entry_id": "e-street"
+        }
+      ],
+      "taken": [
+        {
+          "entry_id": "e-rei",
+          "role": "turnaround"
+        },
+        {
+          "entry_id": "e-street",
+          "role": "face"
+        }
+      ],
+      "has_refs": true,
+      "out": {
+        "plate": "master",
+        "ref_subjects": [
+          {
+            "kind": "character",
+            "name": "Villian Rei"
+          },
+          {
+            "kind": "location",
+            "name": "Flooded Street"
+          }
+        ],
+        "from_ref": true
+      }
+    }
+  ],
+  "featured_cast": [
+    {
+      "name": "full names, mention order",
+      "text": "Lucy Voss turns as Kai Renn steps in",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Lucy Voss",
+        "Kai Renn"
+      ]
+    },
+    {
+      "name": "a possessive over an object",
+      "text": "Osei's watch sits open on the bench",
+      "names": [
+        "Mara Vale",
+        "Osei Kofi",
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    },
+    {
+      "name": "a possessive over a body part",
+      "text": "Osei's hands sit open on the bench",
+      "names": [
+        "Mara Vale",
+        "Osei Kofi",
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Osei Kofi"
+      ]
+    },
+    {
+      "name": "a possessive over a fight body part",
+      "text": "she drives the staff into Osei's ribs",
+      "names": [
+        "Mara Vale",
+        "Osei Kofi",
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Osei Kofi"
+      ]
+    },
+    {
+      "name": "a possessive over your own motion",
+      "text": "Osei's lunge meets nothing",
+      "names": [
+        "Mara Vale",
+        "Osei Kofi",
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Osei Kofi"
+      ]
+    },
+    {
+      "name": "props do not exclude possessives",
+      "text": "the photograph's corner is bent",
+      "names": [
+        "The Photograph"
+      ],
+      "possessive_excludes": false,
+      "out": [
+        "The Photograph"
+      ]
+    },
+    {
+      "name": "a person by first name",
+      "text": "Osei crosses the room toward Mara",
+      "names": [
+        "Mara Vale",
+        "Osei Kofi",
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Osei Kofi",
+        "Mara Vale"
+      ]
+    },
+    {
+      "name": "a creature by its tail",
+      "text": "the creature lunges through the reflection",
+      "names": [
+        "Fractured Reflection Creature",
+        "Rei"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Fractured Reflection Creature"
+      ]
+    },
+    {
+      "name": "an ambiguous first name is a miss",
+      "text": "Osei crosses the room",
+      "names": [
+        "Osei Kofi",
+        "Osei Mensah"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    },
+    {
+      "name": "a bare name never swallows a variant",
+      "text": "Guide Rei steps in",
+      "names": [
+        "Rei",
+        "Guide Rei",
+        "Astronaut Rei"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Guide Rei"
+      ]
+    },
+    {
+      "name": "a three-letter given name IS a person",
+      "text": "Kai closes his burned knuckles around it",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Kai Renn"
+      ]
+    },
+    {
+      "name": "…and a determined common noun is not",
+      "text": "she saw the tam on the hook",
+      "names": [
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    },
+    {
+      "name": "…and an undetermined one is",
+      "text": "Tam crosses the shop toward the bench",
+      "names": [
+        "Tam Reed"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Tam Reed"
+      ]
+    },
+    {
+      "name": "a function word is never a name",
+      "text": "the reader turns the page",
+      "names": [
+        "The Other Reader",
+        "The First Reader"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    },
+    {
+      "name": "a title-first name is called by its middle",
+      "text": "Rhea enters from the lower right and drives south along the grating",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Captain Rhea Dorne"
+      ]
+    },
+    {
+      "name": "…including one behind an abbreviation",
+      "text": "the pulse reaches the gantry; Sato grips its rail",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Dr. Sato Ibarra"
+      ]
+    },
+    {
+      "name": "a determined middle is a common noun, not a name",
+      "text": "she sets it down on the glass beside the marble",
+      "names": [
+        "Contained Black Hole Marble",
+        "Cloudy Glass Marble"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    },
+    {
+      "name": "…and an undetermined one still finds its owner",
+      "text": "cloudy glass catches the light",
+      "names": [
+        "Contained Black Hole Marble",
+        "Cloudy Glass Marble"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Cloudy Glass Marble"
+      ]
+    },
+    {
+      "name": "the real SPINE_RUN b3 that shipped wrong",
+      "text": "an insert at eye level; the camera Tracking Shot with small amplitude at fast speed beside the passing hands Lucy comes through frame left behind Rhea and presses the Shield Array Override Key into Kai's right palm. Kai closes his burned knuckles around it and breaks toward the west cable trunk, leaving Sato exposed for a beat behind him.",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Lucy Voss",
+        "Captain Rhea Dorne",
+        "Kai Renn",
+        "Dr. Sato Ibarra"
+      ]
+    },
+    {
+      "name": "the real two-shot that staged the wrong pair",
+      "text": "a medium two-shot at eye level between Rhea and Lucy; the camera Arcs with medium amplitude at slow speed around Rhea Rhea leaves the cradle edge and steps into the center work floor toward Juno. Another floor tremor pushes Lucy's shoulder into the south chest plate.",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": [
+        "Captain Rhea Dorne",
+        "Lucy Voss",
+        "Juno Vale"
+      ]
+    },
+    {
+      "name": "a pronoun beat names nobody",
+      "text": "the two stand in silence",
+      "names": [
+        "Lucy Voss",
+        "Kai Renn",
+        "Captain Rhea Dorne",
+        "Dr. Sato Ibarra",
+        "Juno Vale",
+        "Mara Voss",
+        "The Reclaimer"
+      ],
+      "possessive_excludes": true,
+      "out": []
+    }
+  ],
+  "remote_speakers": [
+    {
+      "name": "a caller with no body in the shot",
+      "text": "Mara Vale holds the phone to her ear at the counter",
+      "cast_names": [
+        "Mara Vale",
+        "Tam Reed"
+      ],
+      "speakers": [
+        "Tam Reed"
+      ],
+      "out": [
+        "Tam Reed"
+      ]
+    },
+    {
+      "name": "…but a hand on the phone is a body",
+      "text": "Tam's hand closes over the phone on the counter",
+      "cast_names": [
+        "Mara Vale",
+        "Tam Reed"
+      ],
+      "speakers": [
+        "Tam Reed"
+      ],
+      "out": []
+    },
+    {
+      "name": "no device word, nobody is remote",
+      "text": "Mara Vale and Tam Reed stand either side of the bench",
+      "cast_names": [
+        "Mara Vale",
+        "Tam Reed"
+      ],
+      "speakers": [
+        "Tam Reed"
+      ],
+      "out": []
+    },
+    {
+      "name": "a title-first name in frame is not a caller",
+      "text": "Rhea leans over the intercom while Rhea keeps one boot on the rail",
+      "cast_names": [
+        "Captain Rhea Dorne"
+      ],
+      "speakers": [
+        "Captain Rhea Dorne"
+      ],
+      "out": []
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+subject_definitions:
+<Picture 1> is the first frame of [Shot 1], the exact final frame of the preceding segment of this video.
+<Subject 1> is Kira, shown in <Picture 2> and <Picture 3>: a 24-year-old woman with chin-length silver hair with a blue streak, sharp amber eyes, a small scar over her left eyebrow, a black choker and a cropped neon-blue bomber jacket over a white tank top.
+<Subject 2> is the rain-slick rooftop environment, shown in <Picture 4>: a rain-slick rooftop with holographic billboards; its palette of deep blue, magenta and amber neon-noir is retained.
+<Picture 5> is a storyboard reference for [Shot 2], defining the cyan glitch burst that fractures the billboard light; its framing is intended.
+The plain grey studio backdrop visible in the reference sheets (<Picture 2>, <Picture 3>) is a reference-sheet artifact: it never appears in the target video. Every shot takes place inside the declared environment — the rain-slick rooftop.
+<Audio 1> is the supplied master music track for this segment.
+
+summary:
+[keyframe completion + reference generation + audio reuse] The target video is one continuous segment of a 2D-animated anime music video featuring <Subject 1>. It opens as Kira stands at the rooftop edge, singing directly to camera and ends as Kira faces the skyline and raises her right hand toward a distant tower. The segment begins from <Picture 1>. <Audio 1> is reused as the complete final audio track.
+
+retention_analysis:
+<Picture 1> ([Shot 1] first frame): fully_preserved - the segment opens on the preceding segment's final frame exactly, composition and lighting.
+<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 4]): fully_preserved - Kira's face, hair, outfit and accessories are retained exactly in every appearance.
+<Picture 2>, <Picture 3> (reference sheets): partially_preserved - the subjects are taken exactly; the plain grey studio backdrop behind them is a sheet artifact and appears in no shot of the target video.
+<Subject 2> (the environment): fully_preserved - its layout, materials and lighting logic are retained.
+<Picture 5> ([Shot 2] storyboard reference): partially_preserved - its composition, staging and the placement of subjects in frame are followed; its color and rendering defer to the scene.
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete final audio track.
+
+detailed_description:
+The target video is in a 2D-animated anime music video style, with a palette of deep blue, magenta and amber neon-noir.
+[Shot 1] <Subject 1> (Kira — a 24-year-old woman with chin-length silver hair with a blue streak, sharp amber eyes, a small scar over her left eyebrow, a black choker and a cropped neon-blue bomber jacket over a white tank top) stands at the rooftop edge, singing directly to camera. The camera pushes in with small amplitude at slow speed from medium shot to medium close-up. <Subject 1> (Kira) (S1) sings, precisely lip-synced to <Audio 1>: <d>[English] I burned the map that led me home</d>
+[Shot 2] At 00:04.000, the shot cuts. <Subject 1> (Kira) walks along the rooftop edge, holographic billboards flaring behind her. A low-angle wide shot; the camera trucks right at fast speed. <Subject 1> (Kira) (S1) sings, precisely lip-synced to <Audio 1>: <d>[English] followed sparks into the smoke</d>
+[Shot 3] At 00:08.000, the shot cuts. an extreme close-up of her amber eyes, rain droplets on her lashes. The camera holds a static shot. No one on screen sings during this shot; every mouth stays closed.
+[Shot 4] At 00:10.000, the shot cuts. <Subject 1> (Kira) faces the skyline and raises her right hand toward a distant tower. A medium shot from behind; the camera pedestals up with small amplitude at slow speed. <Subject 1> (Kira) (S1) sings, precisely lip-synced to <Audio 1>: <d>[English] and I glow — I glow</d>
+The final shot holds its composition steady through the last frame, ending framed exactly on: Kira from behind with her right hand raised toward the tower — the next segment opens on this composition.
+
+overall_soundscape:
+<Audio 1> provides the complete final audio track; no separate ambience or sound effects are added on top.
+
+non_diegetic_music:
+<Audio 1> is directly reused as the complete audience-only music.

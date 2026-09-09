@@ -1,0 +1,20 @@
+node_modules
+dist
+.vercel
+.env
+.env.local
+.env*.local
+*.log
+__pycache__
+*.pyc
+worker/.venv
+worker/output
+.DS_Store
+.env*
+public/demo/
+.ui-shots
+Short-Film-Director-Pipeline-Krea-MiniMax-H3-Full-Pack
+# supabase CLI scratch (project ref, CLI version cache)
+supabase/.temp/
+.pytest_cache/
+.venv/

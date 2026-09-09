@@ -1,0 +1,124 @@
+[package]
+name = "qamba-studio-desktop"
+version = "0.1.0"
+description = "Qamba Studio — AI video builder, desktop shell"
+authors = ["Qamba Studio"]
+edition = "2021"
+rust-version = "1.77.2"
+
+# The binary is `qamba-studio-desktop`; the lib exists so `cargo test` can reach
+# the hardware probes without starting a window. The `_lib` suffix is Tauri's
+# own convention — on Windows a lib and a bin of the same name collide.
+[lib]
+name = "qamba_studio_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# `protocol-asset` is what lets a project's media reach the page. Every file
+# this app makes is on this machine and has no server in front of it, and the
+# alternative — reading every frame and every mp4 through IPC as base64 — is a
+# 4GB render arriving as 5.3GB of JavaScript string. The asset protocol streams
+# from disk, honours Range (so a `<video>` can seek) and sends the window its
+# own origin back as Access-Control-Allow-Origin, which is also what makes the
+# audio effects rack work. Its blast radius is
+# `app.security.assetProtocol.scope` in tauri.conf.json: the app's own data
+# directory and nothing else.
+#
+# NO `devtools` HERE. The feature exposes the Web Inspector in a RELEASE build,
+# i.e. to anyone with the app; a debug build has it regardless.
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-opener = "2"
+# Rust-side HTTP. This is the whole reason a local ComfyUI is reachable: the
+# webview's CORS policy does not apply to a request made from Rust, and a
+# stock ComfyUI sends no Access-Control-Allow-Origin.
+#
+# `unsafe-headers` is not optional here, and it is not about CORS. `Origin` is
+# a FORBIDDEN header name, so the webview strips it before the plugin sees it
+# and substitutes its own — and ComfyUI's `origin_only_middleware` answers 403
+# to any Origin whose domain is not its own Host. Without this feature every
+# single request from the desktop app to a stock ComfyUI is refused. The blast
+# radius is bounded by the URL allow-list in capabilities/default.json:
+# loopback and the weight hosts, nothing else.
+tauri-plugin-http = { version = "2", features = ["unsafe-headers"] }
+# The native folder picker, for "use my own ComfyUI". Driven from RUST
+# (`engine::pick_comfy_dir`) rather than through the plugin's JS API, which is
+# why `capabilities/default.json` carries no `dialog:` permission: the webview
+# can ask for a directory and cannot reach the rest of the dialog surface —
+# file open with filters, save, message boxes. A path typed by hand does the
+# same job, so this is an affordance rather than the mechanism, and the
+# validation is `set_linked_comfy`'s either way.
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = "0.32"
+dirs = "5"
+sha2 = "0.10"
+# Media bytes cross the IPC boundary as base64 in exactly one direction — a
+# file the user dropped into a local project. Everything larger (a render's
+# output, a sync upload) is a path and a stream, never a string.
+base64 = "0.22"
+# reqwest comes THROUGH the http plugin rather than as its own dependency:
+# declaring it twice risks two versions of the same TLS stack in one binary,
+# and doubles a first compile that already takes minutes on a laptop.
+# "net" and "time" are the two loopback listeners — the PostgREST proxy
+# (src/dbproxy.rs) and the media server (src/mediaserver.rs) — each an
+# ephemeral TcpListener with a timeout, so a request nobody answers cannot
+# hold a socket for the life of the app.
+# "sync" is the loopback PostgREST proxy (src/dbproxy.rs): one oneshot per
+# in-flight request, because the answer comes back from the WEBVIEW — the
+# local project's rows are a file the webview owns, so Rust cannot serve them
+# itself without becoming a second writer on that file.
+tokio = { version = "1", features = ["fs", "io-util", "net", "sync", "time"] }
+# Session tokens for that proxy. Already in the tree (tauri depends on it), so
+# this costs a line rather than a download.
+uuid = { version = "1", features = ["v4"] }
+
+[dev-dependencies]
+# The HTTP accept loops (dbproxy, mediaserver) are the parts that fail
+# silently — a request split across reads, a body with multibyte text in it —
+# so they are exercised against a REAL socket. That needs a test runtime, and
+# only here.
+tokio = { version = "1", features = ["macros", "rt", "rt-multi-thread"] }
+serde_json = "1"
+
+[features]
+# by default Tauri runs in production mode unless `tauri dev` says otherwise
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
+
+# BYOK: the user's own provider API keys, in the OS keychain rather than in a
+# file we write. TARGET-SCOPED, one backend each, `default-features = false`
+# throughout — the default feature set would compile every platform's backend
+# on every platform, which on macOS and Windows means a build-time dependency
+# on D-Bus/zbus for a service those systems do not have.
+#
+# THERE IS NO IN-APP UPDATER IN THIS BUILD, which is why `tauri-plugin-updater`
+# is absent from this file. An updater is two pieces of somebody's private
+# infrastructure — a release endpoint and a signing key that decides which
+# binaries this machine will execute — and shipping a fork that trusts another
+# project's key is not a default anyone should inherit. See README.md: a fork
+# that wants one generates its own keypair and names its own endpoint.
+[target.'cfg(target_os = "macos")'.dependencies]
+keyring = { version = "3.6", default-features = false, features = ["apple-native"] }
+
+[target.'cfg(windows)'.dependencies]
+keyring = { version = "3.6", default-features = false, features = ["windows-native"] }
+
+# Linux keys live in the Secret Service (GNOME Keyring, KWallet, KeePassXC…),
+# reached over D-Bus. `crypto-rust` rather than `crypto-openssl` so the session
+# encryption needs no system OpenSSL headers to build. A machine running no
+# Secret Service at all gets a runtime error from `byok_set` naming that —
+# which is the honest answer, and better than writing keys to a file we
+# invented.
+[target.'cfg(target_os = "linux")'.dependencies]
+keyring = { version = "3.6", default-features = false, features = ["sync-secret-service", "crypto-rust"] }

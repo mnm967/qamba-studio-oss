@@ -1,0 +1,742 @@
+{
+  "full": {
+    "image_models": {
+      "flux": {
+        "family": "flux",
+        "unet": "FLUX1/flux1-dev.safetensors",
+        "weight_dtype": "default",
+        "kontext": "FLUX1/flux1-dev-kontext_fp8_scaled.safetensors",
+        "t5": "T5/t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l": "clip_l.safetensors",
+        "vae": "ae.safetensors",
+        "style_loras": {
+          "shinkai": "yourNameMakotoShinkaiSTYLE_v90FINAL.safetensors"
+        }
+      },
+      "flux2": {
+        "family": "flux2",
+        "unet": "flux2-dev-Q4_K_M.gguf",
+        "text_encoder": "mistral_3_small_flux2_fp4_mixed.safetensors",
+        "vae": "flux2-vae.safetensors"
+      },
+      "klein": {
+        "family": "klein",
+        "unet": "FLUX1/flux-2-klein-base-9b.safetensors",
+        "text_encoder": "qwen_3_8b_fp8mixed.safetensors",
+        "vae": "flux2-vae.safetensors",
+        "steps": 50,
+        "cfg": 4.0,
+        "style_loras": {
+          "shinkai": "flux2_klein_shinkai_v3.safetensors"
+        },
+        "lora_triggers": {
+          "shinkai": "anime screencap"
+        }
+      },
+      "flux2-klein-4b": {
+        "family": "flux2",
+        "unet": "flux-2-klein-4b-fp8.safetensors",
+        "text_encoder": "qwen_3_4b_fp4_flux2.safetensors",
+        "vae": "flux2-vae.safetensors",
+        "steps": 4,
+        "max_refs": 4
+      },
+      "krea2": {
+        "family": "krea2",
+        "unet": "Krea2/krea2_turbo_fp8_scaled.safetensors",
+        "text_encoder": "Qwen3VL4B/qwen3vl_4b_bf16.safetensors",
+        "vae": "qwen_image_vae.safetensors",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lora_strength": 1.0,
+        "style_loras": {
+          "lenovo": "krea2_lenovo_ultrareal_v1.safetensors",
+          "identity": "krea2_identity_edit_v1_2.safetensors",
+          "realism": "krea2_realism_engine_v3.1.safetensors"
+        },
+        "identity_edit": {
+          "lora": "identity",
+          "ref_boost": 3.0,
+          "grounding_px": 768,
+          "scene_boost": 1.0
+        }
+      },
+      "qwen-edit": {
+        "family": "qwen",
+        "unet": "qwen_image_edit_2511_fp8mixed.safetensors",
+        "text_encoder": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "vae": "qwen_image_vae.safetensors",
+        "steps": 20,
+        "cfg": 2.5,
+        "shift": 3.1,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lora_strength": 1.0
+      },
+      "hikari-anima": {
+        "family": "anima",
+        "unet": "Anima/hikariAnima_100.safetensors",
+        "text_encoder": "qwen_3_06b_base.safetensors",
+        "clip_type": "stable_diffusion",
+        "vae": "qwen_image_vae.safetensors",
+        "steps": 30,
+        "cfg": 4.0,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lora_strength": 1.0,
+        "negative": "worst quality, low quality, blurry, jpeg artifacts, sepia"
+      },
+      "anima-29b": {
+        "family": "anima",
+        "unet": "Anima/anima_29b_preview_v1.safetensors",
+        "text_encoder": "qwen_3_06b_base.safetensors",
+        "clip_type": "stable_diffusion",
+        "vae": "qwen_image_vae.safetensors",
+        "steps": 32,
+        "cfg": 4.0,
+        "sampler": "euler",
+        "scheduler": "sgm_uniform",
+        "lora_strength": 1.0,
+        "negative": "worst quality, low quality, blurry, jpeg artifacts, sepia"
+      },
+      "h3-image": {
+        "family": "h3",
+        "from_model": "minimax-h3",
+        "mode": "r2v",
+        "steps": 20,
+        "image_vae": "minimax_h3_t1_image_vae_step1597.safetensors",
+        "lora_strength": 1.0,
+        "style_loras": {
+          "thisisfine": "h3_thisisfine_r2v_v01.safetensors"
+        }
+      },
+      "h3-image-turbo": {
+        "family": "h3",
+        "from_model": "minimax-h3",
+        "mode": "r2v",
+        "image_vae": "minimax_h3_t1_image_vae_step1597.safetensors",
+        "scheduler": "simple",
+        "frame_turbo": {
+          "lora": "minimax_h3_lightx2v_turbo_8step_v10.safetensors",
+          "steps": 8,
+          "strength": 1.0,
+          "sampler": "sa_solver"
+        },
+        "ref_turbo": {
+          "lora": "minimax_h3_lightx2v_ref2v_turbo_4step_v01.safetensors",
+          "steps": 4,
+          "strength": 0.75,
+          "sampler": "er_sde"
+        },
+        "lora_strength": 1.0,
+        "style_loras": {
+          "thisisfine": "h3_thisisfine_r2v_v01.safetensors"
+        }
+      },
+      "h3-image-pdd": {
+        "family": "h3",
+        "from_model": "minimax-h3-pdd",
+        "mode": "r2v",
+        "image_vae": "minimax_h3_t1_image_vae_step1597.safetensors",
+        "scheduler": "simple",
+        "steps": 8,
+        "lora_strength": 1.0,
+        "style_loras": {
+          "thisisfine": "h3_thisisfine_r2v_v01.safetensors"
+        }
+      },
+      "hidream-o1": {
+        "family": "hidream_o1",
+        "checkpoint": "hidream_o1_image_fp8_scaled.safetensors",
+        "steps": 40,
+        "cfg": 5.0,
+        "noise_scale": 8.0,
+        "sampler": "dpmpp_2m_sde_gpu",
+        "scheduler": "normal",
+        "seam_smoothing": true,
+        "max_refs": 10
+      },
+      "flux2-dev": {
+        "family": "flux2",
+        "unet": "flux2_dev_fp8mixed.safetensors",
+        "text_encoder": "mistral_3_small_flux2_fp8.safetensors",
+        "vae": "flux2-vae.safetensors",
+        "steps": 20,
+        "max_refs": 4,
+        "style_loras": {
+          "turbo": "Flux2TurboComfyv2.safetensors"
+        }
+      },
+      "sensenova-u1": {
+        "family": "sensenova",
+        "model_path": "/data/models/sensenova/SenseNova-U1.5-8B-MoT",
+        "steps": 50,
+        "cfg": 4.0,
+        "img_cfg": 1.0,
+        "timestep_shift": 3.0,
+        "cfg_norm": "none",
+        "dtype": "bfloat16",
+        "attn_backend": "auto",
+        "vram_mode": "full",
+        "max_refs": 10
+      }
+    },
+    "models": {
+      "wan2.2": {
+        "vae": "wan_2.1_vae.safetensors",
+        "text_encoders": [
+          "umt5_xxl_fp16.safetensors"
+        ],
+        "modes": {
+          "i2v": {
+            "workflow": "wan22_14b_i2v_fp8.json",
+            "high": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "low": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors"
+          },
+          "flf": {
+            "workflow": "wan22_14b_flf.json",
+            "high": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "low": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors"
+          }
+        }
+      },
+      "wan-shinkai": {
+        "vae": "wan_2.1_vae.safetensors",
+        "text_encoders": [
+          "umt5_xxl_fp16.safetensors"
+        ],
+        "style_lora": "547095-wan-sh1nka1-e140.safetensors",
+        "style_strength": 0.9,
+        "trigger": "sh1nka1 style",
+        "modes": {
+          "i2v": {
+            "workflow": "wan22_14b_i2v_style.json",
+            "high": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "low": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors"
+          }
+        }
+      },
+      "animegen": {
+        "vae": "wan_2.1_vae.safetensors",
+        "text_encoders": [
+          "umt5_xxl_fp16.safetensors"
+        ],
+        "modes": {
+          "i2v": {
+            "workflow": "wan22_14b_i2v_fp8.json",
+            "high": "animegen_i2v_high_noise_bf16.safetensors",
+            "low": "animegen_i2v_low_noise_bf16.safetensors"
+          }
+        }
+      },
+      "minimax-h3": {
+        "vae": "minimax_h3_video_vae_fp16.safetensors",
+        "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+        "text_encoders": [
+          "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 17,
+        "frame_rem": 5,
+        "lora_strength": 1.0,
+        "style_loras": {
+          "combat": "h3_combat_v2.safetensors",
+          "camera": "camera_motion_h3_lora_v1_3000_pruned.safetensors"
+        },
+        "lora_defaults": {
+          "camera": 0.9
+        },
+        "lora_triggers": {
+          "camera": "camera motion"
+        },
+        "modes": {
+          "i2v": {
+            "workflow": "minimax_h3_i2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "t2v": {
+            "workflow": "minimax_h3_t2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "flf": {
+            "workflow": "minimax_h3_flf.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "r2v": {
+            "workflow": "minimax_h3_r2v.json",
+            "checkpoint": "minimax_h3_ref2va_int8_convrot.safetensors"
+          }
+        },
+        "dim_step": 32,
+        "refine": {
+          "scale": 1.25,
+          "steps": 4,
+          "denoise": 0.2,
+          "scheduler": "beta",
+          "upscale_method": "lanczos",
+          "freeze_audio": true
+        },
+        "split_pass": {
+          "extend_steps": 3,
+          "extend_from": 0.65,
+          "extend_to": 0.28,
+          "spacing": "sine",
+          "split": 0.25,
+          "lora_scale": 0.65,
+          "turbo_scale": 0.29
+        },
+        "latent_upscale": {
+          "model": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+          "first_pass_mp": 0.35,
+          "denoise": 0.45,
+          "precision": "fp16"
+        }
+      },
+      "minimax-h3-turbo": {
+        "vae": "minimax_h3_video_vae_fp16.safetensors",
+        "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+        "text_encoders": [
+          "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 17,
+        "frame_rem": 5,
+        "turbo_lora": "minimax_h3_turbo_v4_step600_ema.safetensors",
+        "turbo_strength": 1.0,
+        "steps": 6,
+        "lora_strength": 1.0,
+        "style_loras": {
+          "combat": "h3_combat_v2.safetensors",
+          "camera": "camera_motion_h3_lora_v1_3000_pruned.safetensors"
+        },
+        "lora_defaults": {
+          "camera": 0.9
+        },
+        "lora_triggers": {
+          "camera": "camera motion"
+        },
+        "modes": {
+          "i2v": {
+            "workflow": "minimax_h3_i2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "t2v": {
+            "workflow": "minimax_h3_t2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "flf": {
+            "workflow": "minimax_h3_flf.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "r2v": {
+            "workflow": "minimax_h3_r2v.json",
+            "checkpoint": "minimax_h3_ref2va_int8_convrot.safetensors"
+          }
+        },
+        "dim_step": 32,
+        "refine": {
+          "scale": 1.25,
+          "steps": 4,
+          "denoise": 0.2,
+          "scheduler": "beta",
+          "upscale_method": "lanczos",
+          "freeze_audio": true
+        },
+        "split_pass": {
+          "extend_steps": 3,
+          "extend_from": 0.65,
+          "extend_to": 0.28,
+          "spacing": "sine",
+          "split": 0.25,
+          "lora_scale": 0.65,
+          "turbo_scale": 0.29
+        },
+        "latent_upscale": {
+          "model": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+          "first_pass_mp": 0.35,
+          "denoise": 0.45,
+          "precision": "fp16"
+        }
+      },
+      "minimax-h3-lightx2v": {
+        "vae": "minimax_h3_video_vae_fp16.safetensors",
+        "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+        "text_encoders": [
+          "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 17,
+        "frame_rem": 5,
+        "turbo_lora": "minimax_h3_lightx2v_turbo_4step_v01.safetensors",
+        "turbo_strength": 0.75,
+        "turbo_apply": "plain",
+        "steps": 4,
+        "sampler": "er_sde",
+        "lora_strength": 1.0,
+        "style_loras": {
+          "combat": "h3_combat_v2.safetensors",
+          "camera": "camera_motion_h3_lora_v1_3000_pruned.safetensors"
+        },
+        "lora_defaults": {
+          "camera": 0.9
+        },
+        "lora_triggers": {
+          "camera": "camera motion"
+        },
+        "modes": {
+          "i2v": {
+            "workflow": "minimax_h3_i2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "t2v": {
+            "workflow": "minimax_h3_t2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "flf": {
+            "workflow": "minimax_h3_flf.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          }
+        },
+        "dim_step": 32,
+        "refine": {
+          "scale": 1.25,
+          "steps": 4,
+          "denoise": 0.2,
+          "scheduler": "beta",
+          "upscale_method": "lanczos",
+          "freeze_audio": true
+        },
+        "split_pass": {
+          "extend_steps": 3,
+          "extend_from": 0.65,
+          "extend_to": 0.28,
+          "spacing": "sine",
+          "split": 0.25,
+          "lora_scale": 0.65,
+          "turbo_scale": 0.29
+        },
+        "latent_upscale": {
+          "model": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+          "first_pass_mp": 0.35,
+          "denoise": 0.45,
+          "precision": "fp16"
+        }
+      },
+      "minimax-h3-hybrid": {
+        "vae": "minimax_h3_video_vae_fp16.safetensors",
+        "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+        "text_encoders": [
+          "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 17,
+        "frame_rem": 5,
+        "lora_strength": 1.0,
+        "style_loras": {
+          "combat": "h3_combat_v2.safetensors",
+          "camera": "camera_motion_h3_lora_v1_3000_pruned.safetensors"
+        },
+        "lora_defaults": {
+          "camera": 0.9
+        },
+        "lora_triggers": {
+          "camera": "camera motion"
+        },
+        "modes": {
+          "r2v": {
+            "workflow": "minimax_h3_r2v.json",
+            "checkpoint": "minimax_h3_hybrid_fl2va_ref2va_b25-49.safetensors"
+          }
+        },
+        "dim_step": 32,
+        "refine": {
+          "scale": 1.25,
+          "steps": 4,
+          "denoise": 0.2,
+          "scheduler": "beta",
+          "upscale_method": "lanczos",
+          "freeze_audio": true
+        },
+        "split_pass": {
+          "extend_steps": 3,
+          "extend_from": 0.65,
+          "extend_to": 0.28,
+          "spacing": "sine",
+          "split": 0.25,
+          "lora_scale": 0.65,
+          "turbo_scale": 0.29
+        },
+        "latent_upscale": {
+          "model": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+          "first_pass_mp": 0.35,
+          "denoise": 0.45,
+          "precision": "fp16"
+        }
+      },
+      "ltx-ttgl": {
+        "vae": "LTX23_video_vae_bf16.safetensors",
+        "audio_vae": "LTX23_audio_vae_bf16.safetensors",
+        "text_encoders": [
+          "gemma_3_12B_it_fp8_scaled.safetensors",
+          "ltx-2.3_text_projection_bf16.safetensors"
+        ],
+        "fps": 24,
+        "lora": "ltx23_gurren_lagann.safetensors",
+        "lora_strength": 1.0,
+        "trigger": "TTGL",
+        "modes": {
+          "i2v": {
+            "workflow": "ltx23_i2v.json",
+            "checkpoint": "ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors"
+          }
+        }
+      },
+      "ltx-env": {
+        "vae": "LTX23_video_vae_bf16.safetensors",
+        "audio_vae": "LTX23_audio_vae_bf16.safetensors",
+        "text_encoders": [
+          "gemma_3_12B_it_fp8_scaled.safetensors",
+          "ltx-2.3_text_projection_bf16.safetensors"
+        ],
+        "fps": 24,
+        "lora": "ltx23_shinkai_env.safetensors",
+        "lora_strength": 1.0,
+        "trigger": "ANIMSTY, SHW_YN.",
+        "modes": {
+          "i2v": {
+            "workflow": "ltx23_i2v.json",
+            "checkpoint": "ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors"
+          }
+        }
+      },
+      "ltx-25": {
+        "vae": "ltx-2.5-video-vae-conv-bf16.safetensors",
+        "audio_vae": "ltx-2.5-audio-vae-bf16.safetensors",
+        "text_encoders": [
+          "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 8,
+        "frame_rem": 1,
+        "dim_step": 64,
+        "latent_scale": 0.5,
+        "latent_upscaler": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+        "msr_lora": "LTX-2.5-Licon-MSR-V1.safetensors",
+        "extra_nodes": [
+          "https://github.com/liconstudio/ComfyUI-LTX2.5-MSR"
+        ],
+        "modes": {
+          "t2v": {
+            "workflow": "ltx25_t2v.json",
+            "checkpoint": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors"
+          },
+          "i2v": {
+            "workflow": "ltx25_i2v.json",
+            "checkpoint": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors"
+          },
+          "flf": {
+            "workflow": "ltx25_flf.json",
+            "checkpoint": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors"
+          },
+          "r2v": {
+            "workflow": "ltx25_r2v.json",
+            "checkpoint": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors"
+          }
+        }
+      },
+      "minimax-h3-pdd": {
+        "vae": "minimax_h3_video_vae_fp16.safetensors",
+        "audio_vae": "minimax_h3_audio_vae_fp32.safetensors",
+        "text_encoders": [
+          "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+        ],
+        "fps": 24,
+        "frame_base": 17,
+        "frame_rem": 5,
+        "lora_strength": 1.0,
+        "style_loras": {
+          "combat": "h3_combat_v2.safetensors",
+          "camera": "camera_motion_h3_lora_v1_3000_pruned.safetensors"
+        },
+        "lora_defaults": {
+          "camera": 0.9
+        },
+        "lora_triggers": {
+          "camera": "camera motion"
+        },
+        "modes": {
+          "i2v": {
+            "workflow": "minimax_h3_i2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "t2v": {
+            "workflow": "minimax_h3_t2v.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "flf": {
+            "workflow": "minimax_h3_flf.json",
+            "checkpoint": "minimax_h3_fl2va_int8_convrot.safetensors"
+          },
+          "r2v": {
+            "workflow": "minimax_h3_r2v.json",
+            "checkpoint": "minimax_h3_ref2va_int8_convrot.safetensors"
+          }
+        },
+        "dim_step": 32,
+        "pdd": {
+          "fl2va": "MiniMax-H3-FL2VA-Acc-8Step.safetensors",
+          "ref2va": "MiniMax-H3-Ref2VA-Acc-8Step.safetensors",
+          "nfe": "8"
+        },
+        "extra_nodes": [
+          "https://github.com/Jalen-Brunson/ComfyUI-MiniMax-H3-PDD-Acc"
+        ],
+        "steps": 8,
+        "latent_upscale": {
+          "model": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+          "first_pass_mp": 0.35,
+          "denoise": 0.45,
+          "precision": "fp16"
+        }
+      }
+    },
+    "music_models": {
+      "minimax-music3": {
+        "family": "music3",
+        "unet": "minimax_music3_dit_fp16.safetensors",
+        "text_encoder": "minimax_music3_text_encoder_pruned_int8_convrot.safetensors",
+        "clip_type": "minimax",
+        "vae": "minimax_music3_dav.safetensors",
+        "steps": 30,
+        "cfg": 1.7,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lm_cfg": 1.7,
+        "top_k": 50,
+        "max_seconds": 360,
+        "sample_rate": 44100
+      },
+      "acestep-1.5": {
+        "family": "acestep",
+        "unet": "acestep_v1.5_turbo.safetensors",
+        "text_encoders": [
+          "qwen_0.6b_ace15.safetensors",
+          "qwen_1.7b_ace15.safetensors"
+        ],
+        "clip_type": "ace",
+        "vae": "ace_1.5_vae.safetensors",
+        "steps": 8,
+        "cfg": 1.0,
+        "shift": 3.0,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lm_cfg": 2.0,
+        "max_seconds": 300,
+        "sample_rate": 48000
+      },
+      "acestep-1.5-xl": {
+        "family": "acestep",
+        "unet": "acestep_v1.5_xl_turbo_bf16.safetensors",
+        "text_encoders": [
+          "qwen_0.6b_ace15.safetensors",
+          "qwen_4b_ace15.safetensors"
+        ],
+        "clip_type": "ace",
+        "vae": "ace_1.5_vae.safetensors",
+        "steps": 8,
+        "cfg": 1.0,
+        "shift": 3.0,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lm_cfg": 2.0,
+        "max_seconds": 300,
+        "sample_rate": 48000
+      },
+      "acestep-1.5-xl-sft": {
+        "family": "acestep",
+        "unet": "acestep_v1.5_xl_sft_bf16.safetensors",
+        "text_encoders": [
+          "qwen_0.6b_ace15.safetensors",
+          "qwen_4b_ace15.safetensors"
+        ],
+        "clip_type": "ace",
+        "vae": "ace_1.5_vae.safetensors",
+        "steps": 50,
+        "cfg": 7.0,
+        "shift": 3.0,
+        "sampler": "euler",
+        "scheduler": "simple",
+        "lm_cfg": 2.0,
+        "max_seconds": 300,
+        "sample_rate": 48000
+      }
+    },
+    "sfx_models": {
+      "stable-audio-3-medium": {
+        "family": "stable_audio",
+        "checkpoint": "stable_audio_3_medium.safetensors",
+        "text_encoder": "t5gemma_b_b_ul2.safetensors",
+        "clip_type": "stable_audio",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "max_seconds": 380,
+        "sample_rate": 44100
+      },
+      "stable-audio-3-medium-base": {
+        "family": "stable_audio",
+        "checkpoint": "stable_audio_3_medium_base.safetensors",
+        "text_encoder": "t5gemma_b_b_ul2.safetensors",
+        "clip_type": "stable_audio",
+        "steps": 50,
+        "cfg": 7.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "negative": true,
+        "max_seconds": 380,
+        "sample_rate": 44100
+      },
+      "stable-audio-3-small-sfx": {
+        "family": "stable_audio",
+        "checkpoint": "stable_audio_3_small_sfx.safetensors",
+        "text_encoder": "t5gemma_b_b_ul2.safetensors",
+        "clip_type": "stable_audio",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "max_seconds": 120,
+        "sample_rate": 44100
+      }
+    },
+    "image_control": {
+      "krea2_depth": "Krea2/depth-control-lora.safetensors"
+    },
+    "v2a_models": {
+      "mmaudio-large-44k-v2": {
+        "family": "mmaudio",
+        "model": "mmaudio_large_44k_v2_fp16.safetensors",
+        "vae": "mmaudio_vae_44k_fp16.safetensors",
+        "synchformer": "mmaudio_synchformer_fp16.safetensors",
+        "clip": "apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors",
+        "precision": "fp16",
+        "mode": "44k",
+        "sync_fps": 25,
+        "clip_fps": 8,
+        "steps": 25,
+        "cfg": 4.5,
+        "max_seconds": 30.0,
+        "trained_seconds": 8.0,
+        "sample_rate": 44100,
+        "negative": true,
+        "extra_nodes": [
+          "https://github.com/kijai/ComfyUI-MMAudio",
+          "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+        ]
+      }
+    }
+  }
+}

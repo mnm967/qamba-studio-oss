@@ -1,0 +1,15 @@
+-- Per-LANE audio effects: the same ordered chain `clips.audio_fx` holds, on
+-- the track instead of the clip.
+--
+-- The two are different stages of one signal path, not two spellings of the
+-- same thing: a clip's chain is part of what THAT clip sounds like, a lane's
+-- is an insert every clip on the lane passes through on its way to the mix.
+-- So they compose (clip chain, then lane chain) rather than override, and a
+-- lane rack is the only place a compressor can hear a whole lane at once —
+-- which is the thing a per-clip one structurally cannot do.
+--
+-- Same catalog, same engine-neutral parameters, same two engines: Tuna in the
+-- preview (src/lib/audioGraph.ts, through a per-lane bus) and ffmpeg in the
+-- render (worker/audio_fx.py, through a per-lane `amix`). See
+-- src/lib/audioFx.ts for the catalog that defines the parameters.
+alter table tracks add column if not exists audio_fx jsonb not null default '[]';

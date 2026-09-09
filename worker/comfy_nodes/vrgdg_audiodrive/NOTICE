@@ -1,0 +1,13 @@
+VRGDG_MiniMaxH3AudioDrive.py is vendored unmodified from
+https://github.com/vrgamegirl19/comfyui-vrgamedevgirl (AGPL-3.0),
+author vrgamegirl19 (VRGameDevGirl). Fetched 2026-08-05 from main.
+
+It locks a supplied audio track into MiniMax H3's joint audio+video latent
+(zero denoise mask on the audio half) so H3 generates picture against the
+exact source track — the music-video mechanism. The original AUDIO object is
+passed through for final muxing so the source track is never re-encoded by
+the model.
+
+This directory is symlinked into ComfyUI/custom_nodes/ by
+the engine window's node-pack install. The full pack's license terms apply to this
+file; see LICENSE.

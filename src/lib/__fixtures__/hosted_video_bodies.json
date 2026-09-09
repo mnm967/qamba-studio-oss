@@ -1,0 +1,1253 @@
+{
+  "fal": [
+    {
+      "body": {
+        "aspect_ratio": "16:9",
+        "duration": "8",
+        "prompt": "a street at dusk",
+        "resolution": "720p"
+      },
+      "endpoint": "bytedance/seedance-2.5/text-to-video",
+      "name": "seedance t2v",
+      "req": {
+        "height": 736,
+        "mode": "t2v",
+        "prompt": "a street at dusk",
+        "seconds": 8,
+        "width": 1280
+      },
+      "served_mode": "t2v",
+      "shot": {},
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "audios": "audio_urls",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "end": "end_image_url",
+        "endpoints": {
+          "flf": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "i2v": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "r2v": "bytedance/seedance-2.5/reference-to-video",
+          "t2v": "bytedance/seedance-2.5/text-to-video"
+        },
+        "images": "image_urls",
+        "maxRefs": 50,
+        "resolutions": [
+          "480p",
+          "720p"
+        ],
+        "start": "image_url",
+        "videos": "video_urls"
+      }
+    },
+    {
+      "body": {
+        "aspect_ratio": "16:9",
+        "duration": "5",
+        "image_url": "https://cdn.example/a.png",
+        "prompt": "she turns",
+        "resolution": "720p",
+        "seed": 42
+      },
+      "endpoint": "bytedance/seedance-2.5/image-to-video",
+      "name": "seedance i2v",
+      "req": {
+        "height": 736,
+        "mode": "i2v",
+        "prompt": "she turns",
+        "seconds": 5,
+        "seed": 42,
+        "width": 1280
+      },
+      "served_mode": "i2v",
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "start": "https://cdn.example/a.png"
+      },
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "audios": "audio_urls",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "end": "end_image_url",
+        "endpoints": {
+          "flf": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "i2v": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "r2v": "bytedance/seedance-2.5/reference-to-video",
+          "t2v": "bytedance/seedance-2.5/text-to-video"
+        },
+        "images": "image_urls",
+        "maxRefs": 50,
+        "resolutions": [
+          "480p",
+          "720p"
+        ],
+        "start": "image_url",
+        "videos": "video_urls"
+      }
+    },
+    {
+      "body": {
+        "aspect_ratio": "16:9",
+        "duration": "4",
+        "end_image_url": "https://cdn.example/b.png",
+        "image_url": "https://cdn.example/a.png",
+        "prompt": "bridge the two",
+        "resolution": "720p"
+      },
+      "endpoint": "bytedance/seedance-2.5/image-to-video",
+      "name": "seedance flf",
+      "req": {
+        "height": 736,
+        "mode": "flf",
+        "prompt": "bridge the two",
+        "seconds": 3,
+        "width": 1280
+      },
+      "served_mode": "flf",
+      "shot": {
+        "end": "https://cdn.example/b.png",
+        "start": "https://cdn.example/a.png"
+      },
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "audios": "audio_urls",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "end": "end_image_url",
+        "endpoints": {
+          "flf": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "i2v": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "r2v": "bytedance/seedance-2.5/reference-to-video",
+          "t2v": "bytedance/seedance-2.5/text-to-video"
+        },
+        "images": "image_urls",
+        "maxRefs": 50,
+        "resolutions": [
+          "480p",
+          "720p"
+        ],
+        "start": "image_url",
+        "videos": "video_urls"
+      }
+    },
+    {
+      "body": {
+        "aspect_ratio": "9:16",
+        "audio_urls": [
+          "https://cdn.example/a1.mp3"
+        ],
+        "duration": "12",
+        "image_urls": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "prompt": "[Image1] meets [Image2]",
+        "resolution": "720p",
+        "video_urls": [
+          "https://cdn.example/v1.mp4"
+        ]
+      },
+      "endpoint": "bytedance/seedance-2.5/reference-to-video",
+      "name": "seedance r2v",
+      "req": {
+        "height": 1280,
+        "mode": "r2v",
+        "prompt": "[Image1] meets [Image2]",
+        "seconds": 12,
+        "width": 736
+      },
+      "served_mode": "r2v",
+      "shot": {
+        "audio": [
+          "https://cdn.example/a1.mp3"
+        ],
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "videos": [
+          "https://cdn.example/v1.mp4"
+        ]
+      },
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "audios": "audio_urls",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "end": "end_image_url",
+        "endpoints": {
+          "flf": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "i2v": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "r2v": "bytedance/seedance-2.5/reference-to-video",
+          "t2v": "bytedance/seedance-2.5/text-to-video"
+        },
+        "images": "image_urls",
+        "maxRefs": 50,
+        "resolutions": [
+          "480p",
+          "720p"
+        ],
+        "start": "image_url",
+        "videos": "video_urls"
+      }
+    },
+    {
+      "body": {
+        "aspect_ratio": "9:16",
+        "duration": "7",
+        "prompt": "x",
+        "resolution": "720p"
+      },
+      "endpoint": "bytedance/seedance-2.5/text-to-video",
+      "name": "seedance odd length",
+      "req": {
+        "height": 1920,
+        "mode": "t2v",
+        "prompt": "x",
+        "seconds": 7.4,
+        "width": 1088
+      },
+      "served_mode": "t2v",
+      "shot": {},
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "audios": "audio_urls",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "end": "end_image_url",
+        "endpoints": {
+          "flf": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "i2v": {
+            "audios": null,
+            "id": "bytedance/seedance-2.5/image-to-video",
+            "images": null,
+            "videos": null
+          },
+          "r2v": "bytedance/seedance-2.5/reference-to-video",
+          "t2v": "bytedance/seedance-2.5/text-to-video"
+        },
+        "images": "image_urls",
+        "maxRefs": 50,
+        "resolutions": [
+          "480p",
+          "720p"
+        ],
+        "start": "image_url",
+        "videos": "video_urls"
+      }
+    },
+    {
+      "body": {
+        "aspect_ratio": "16:9",
+        "duration": "20",
+        "prompt": "a harbour",
+        "resolution": "1080p"
+      },
+      "endpoint": "blackforestlabs/flux-3/text-to-video",
+      "name": "flux3 t2v",
+      "req": {
+        "height": 1088,
+        "mode": "t2v",
+        "prompt": "a harbour",
+        "seconds": 20,
+        "width": 1920
+      },
+      "served_mode": "t2v",
+      "shot": {},
+      "spec": {
+        "aspect": true,
+        "audioFlag": "generate_audio",
+        "duration": "string",
+        "durations": [
+          "auto",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ],
+        "endpoints": {
+          "t2v": "blackforestlabs/flux-3/text-to-video"
+        },
+        "resolutions": [
+          "720p",
+          "1080p"
+        ]
+      }
+    },
+    {
+      "body": {
+        "duration": 6,
+        "image_url": "https://cdn.example/a.png",
+        "prompt": "continue",
+        "reference_image_urls": [
+          "https://cdn.example/r1.png"
+        ]
+      },
+      "endpoint": "fal-ai/minimax/hailuo-3",
+      "name": "h3 i2v",
+      "req": {
+        "height": 736,
+        "mode": "i2v",
+        "prompt": "continue",
+        "seconds": 6,
+        "width": 1280
+      },
+      "served_mode": "i2v",
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png"
+        ],
+        "start": "https://cdn.example/a.png"
+      },
+      "spec": {
+        "aspect": false,
+        "duration": "int",
+        "endpoints": {
+          "i2v": "fal-ai/minimax/hailuo-3",
+          "r2v": "fal-ai/minimax/hailuo-3",
+          "t2v": "fal-ai/minimax/hailuo-3"
+        },
+        "images": "reference_image_urls",
+        "maxRefs": 9,
+        "start": "image_url"
+      }
+    },
+    {
+      "body": {
+        "duration": 6,
+        "prompt": "many",
+        "reference_image_urls": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png"
+        ]
+      },
+      "endpoint": "fal-ai/minimax/hailuo-3",
+      "name": "h3 r2v capped",
+      "req": {
+        "height": 736,
+        "mode": "r2v",
+        "prompt": "many",
+        "seconds": 6,
+        "width": 1280
+      },
+      "served_mode": "r2v",
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png"
+        ]
+      },
+      "spec": {
+        "aspect": false,
+        "duration": "int",
+        "endpoints": {
+          "i2v": "fal-ai/minimax/hailuo-3",
+          "r2v": "fal-ai/minimax/hailuo-3",
+          "t2v": "fal-ai/minimax/hailuo-3"
+        },
+        "images": "reference_image_urls",
+        "maxRefs": 9,
+        "start": "image_url"
+      }
+    }
+  ],
+  "minimax": [
+    {
+      "body": {
+        "content": [
+          {
+            "text": "a street at dusk",
+            "type": "text"
+          }
+        ],
+        "duration": 8,
+        "model": "MiniMax-H3",
+        "ratio": "16:9",
+        "resolution": "768P"
+      },
+      "name": "t2v",
+      "req": {
+        "height": 736,
+        "mode": "t2v",
+        "prompt": "a street at dusk",
+        "seconds": 8,
+        "width": 1280
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "she turns",
+            "type": "text"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/a.png"
+            },
+            "role": "first_frame",
+            "type": "image_url"
+          }
+        ],
+        "duration": 5,
+        "model": "MiniMax-H3",
+        "ratio": "adaptive",
+        "resolution": "768P"
+      },
+      "name": "i2v with refs",
+      "req": {
+        "height": 736,
+        "mode": "i2v",
+        "prompt": "she turns",
+        "seconds": 5,
+        "width": 1280
+      },
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "start": "https://cdn.example/a.png"
+      }
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "bridge the two",
+            "type": "text"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/a.png"
+            },
+            "role": "first_frame",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/b.png"
+            },
+            "role": "last_frame",
+            "type": "image_url"
+          }
+        ],
+        "duration": 4,
+        "model": "MiniMax-H3",
+        "ratio": "adaptive",
+        "resolution": "768P"
+      },
+      "name": "flf",
+      "req": {
+        "height": 736,
+        "mode": "flf",
+        "prompt": "bridge the two",
+        "seconds": 3,
+        "width": 1280
+      },
+      "shot": {
+        "end": "https://cdn.example/b.png",
+        "start": "https://cdn.example/a.png"
+      }
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "[Image1] meets [Image2]",
+            "type": "text"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r2.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "role": "reference_video",
+            "type": "video_url",
+            "video_url": {
+              "url": "https://cdn.example/v1.mp4"
+            }
+          },
+          {
+            "audio_url": {
+              "url": "https://cdn.example/a1.mp3"
+            },
+            "role": "reference_audio",
+            "type": "audio_url"
+          }
+        ],
+        "duration": 12,
+        "model": "MiniMax-H3",
+        "ratio": "9:16",
+        "resolution": "768P"
+      },
+      "name": "r2v mixed",
+      "req": {
+        "height": 1280,
+        "mode": "r2v",
+        "prompt": "[Image1] meets [Image2]",
+        "seconds": 12,
+        "width": 736
+      },
+      "shot": {
+        "audio": [
+          "https://cdn.example/a1.mp3"
+        ],
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "videos": [
+          "https://cdn.example/v1.mp4"
+        ]
+      }
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "tall",
+            "type": "text"
+          }
+        ],
+        "duration": 15,
+        "model": "MiniMax-H3",
+        "ratio": "9:16",
+        "resolution": "2K"
+      },
+      "name": "portrait 1080",
+      "req": {
+        "height": 1920,
+        "mode": "t2v",
+        "prompt": "tall",
+        "seconds": 30,
+        "width": 1088
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "wide",
+            "type": "text"
+          }
+        ],
+        "duration": 6,
+        "model": "MiniMax-H3",
+        "ratio": "adaptive",
+        "resolution": "768P"
+      },
+      "name": "odd aspect falls back",
+      "req": {
+        "height": 300,
+        "mode": "t2v",
+        "prompt": "wide",
+        "seconds": 6,
+        "width": 1000
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "content": [
+          {
+            "text": "many",
+            "type": "text"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "image_url": {
+              "url": "https://cdn.example/r1.png"
+            },
+            "role": "reference_image",
+            "type": "image_url"
+          },
+          {
+            "role": "reference_video",
+            "type": "video_url",
+            "video_url": {
+              "url": "https://cdn.example/v1.mp4"
+            }
+          },
+          {
+            "role": "reference_video",
+            "type": "video_url",
+            "video_url": {
+              "url": "https://cdn.example/v1.mp4"
+            }
+          },
+          {
+            "role": "reference_video",
+            "type": "video_url",
+            "video_url": {
+              "url": "https://cdn.example/v1.mp4"
+            }
+          }
+        ],
+        "duration": 6,
+        "model": "MiniMax-H3",
+        "ratio": "16:9",
+        "resolution": "768P"
+      },
+      "name": "over the reference ceiling",
+      "req": {
+        "height": 736,
+        "mode": "r2v",
+        "prompt": "many",
+        "seconds": 6,
+        "width": 1280
+      },
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png"
+        ],
+        "videos": [
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4"
+        ]
+      }
+    }
+  ],
+  "wan": [
+    {
+      "body": {
+        "input": {
+          "prompt": "a street at dusk"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 8,
+          "prompt_extend": false,
+          "ratio": "16:9",
+          "resolution": "720P",
+          "watermark": false
+        }
+      },
+      "name": "t2v",
+      "req": {
+        "height": 736,
+        "mode": "t2v",
+        "prompt": "a street at dusk",
+        "seconds": 8,
+        "width": 1280
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "input": {
+          "media": [
+            {
+              "type": "first_frame",
+              "url": "https://cdn.example/a.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r2.png"
+            }
+          ],
+          "prompt": "she turns"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 5,
+          "prompt_extend": false,
+          "ratio": "16:9",
+          "resolution": "720P",
+          "watermark": false
+        }
+      },
+      "name": "i2v with refs",
+      "req": {
+        "height": 736,
+        "mode": "i2v",
+        "prompt": "she turns",
+        "seconds": 5,
+        "width": 1280
+      },
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "start": "https://cdn.example/a.png"
+      }
+    },
+    {
+      "body": {
+        "input": {
+          "media": [
+            {
+              "type": "first_frame",
+              "url": "https://cdn.example/a.png"
+            },
+            {
+              "type": "last_frame",
+              "url": "https://cdn.example/b.png"
+            }
+          ],
+          "prompt": "bridge the two"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 3,
+          "prompt_extend": false,
+          "ratio": "16:9",
+          "resolution": "720P",
+          "watermark": false
+        }
+      },
+      "name": "flf",
+      "req": {
+        "height": 736,
+        "mode": "flf",
+        "prompt": "bridge the two",
+        "seconds": 3,
+        "width": 1280
+      },
+      "shot": {
+        "end": "https://cdn.example/b.png",
+        "start": "https://cdn.example/a.png"
+      }
+    },
+    {
+      "body": {
+        "input": {
+          "media": [
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r2.png"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            },
+            {
+              "type": "reference_audio",
+              "url": "https://cdn.example/a1.mp3"
+            }
+          ],
+          "prompt": "[Image1] meets [Image2]"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 12,
+          "prompt_extend": false,
+          "ratio": "9:16",
+          "resolution": "720P",
+          "watermark": false
+        }
+      },
+      "name": "r2v mixed",
+      "req": {
+        "height": 1280,
+        "mode": "r2v",
+        "prompt": "[Image1] meets [Image2]",
+        "seconds": 12,
+        "width": 736
+      },
+      "shot": {
+        "audio": [
+          "https://cdn.example/a1.mp3"
+        ],
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r2.png"
+        ],
+        "videos": [
+          "https://cdn.example/v1.mp4"
+        ]
+      }
+    },
+    {
+      "body": {
+        "input": {
+          "prompt": "tall"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 30,
+          "prompt_extend": false,
+          "ratio": "9:16",
+          "resolution": "1080P",
+          "watermark": false
+        }
+      },
+      "name": "portrait 1080",
+      "req": {
+        "height": 1920,
+        "mode": "t2v",
+        "prompt": "tall",
+        "seconds": 30,
+        "width": 1088
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "input": {
+          "prompt": "wide"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 6,
+          "prompt_extend": false,
+          "ratio": "adaptive",
+          "resolution": "480P",
+          "watermark": false
+        }
+      },
+      "name": "odd aspect falls back",
+      "req": {
+        "height": 300,
+        "mode": "t2v",
+        "prompt": "wide",
+        "seconds": 6,
+        "width": 1000
+      },
+      "shot": {}
+    },
+    {
+      "body": {
+        "input": {
+          "media": [
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_image",
+              "url": "https://cdn.example/r1.png"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            },
+            {
+              "type": "reference_video",
+              "url": "https://cdn.example/v1.mp4"
+            }
+          ],
+          "prompt": "many"
+        },
+        "model": "wan3.0-video",
+        "parameters": {
+          "audio": true,
+          "duration": 6,
+          "prompt_extend": false,
+          "ratio": "16:9",
+          "resolution": "720P",
+          "watermark": false
+        }
+      },
+      "name": "over the reference ceiling",
+      "req": {
+        "height": 736,
+        "mode": "r2v",
+        "prompt": "many",
+        "seconds": 6,
+        "width": 1280
+      },
+      "shot": {
+        "images": [
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png",
+          "https://cdn.example/r1.png"
+        ],
+        "videos": [
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4",
+          "https://cdn.example/v1.mp4"
+        ]
+      }
+    }
+  ]
+}

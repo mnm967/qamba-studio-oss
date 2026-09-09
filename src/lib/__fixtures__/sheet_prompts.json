@@ -1,0 +1,605 @@
+{
+  "_generated_by": "scripts/gen_sheet_golden.py — do not hand-edit",
+  "_pins": "src/lib/sheetPrompt.ts against worker/image_prompt.py",
+  "cases": [
+    {
+      "name": "character full_body",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character face trims below the collar",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Villian Rei, short black bob with a white streak at the left temple, amber eyes, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character face, a knight's equipment line",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Knight Rei",
+        "identity": "Knight Rei, dark wavy chin-length hair, grey eyes, a broad heavy build, in articulated steel plate with armored gauntlets, greaves, and period boots, holding a cracked-star shield and longsword",
+        "style": "anime"
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Knight Rei, dark wavy chin-length hair, grey eyes, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character face, THE LATE SHIFT's boots-on-a-head-portrait",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Dennis Okonkwo",
+        "identity": "a Black man in his fifties, close-cropped greying hair, half-moon reading glasses on a cord, a navy council-issue tabard and brown desert boots",
+        "style": "anime"
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Dennis Okonkwo, a Black man in his fifties, close-cropped greying hair, half-moon reading glasses on a cord, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character face, everything looks like wardrobe so the line is kept",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Villian Rei",
+        "identity": "a heavy build in a long coat, holding a case",
+        "style": "anime"
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Villian Rei, a heavy build in a long coat, holding a case, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character side",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "side",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body profile view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character outfit",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "outfit",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Waist-up, wardrobe clearly visible, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "character turnaround",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "turnaround",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Character turnaround reference sheet, a 2x3 grid of six views of the SAME person, thin white gutters separating the cells, reading left-to-right top-to-bottom — view 1: front full-body standing relaxed; view 2: back full-body same stance; view 3: left profile full-body; view 4: right three-quarter full-body; view 5: face close-up front; view 6: face close-up right three-quarter — identical face, hair, build and wardrobe in every view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "an unknown character role falls back to full_body",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "detail",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Close-up on the surfaces, materials and dressing at chest height, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "face from ref drops the identity paragraph",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Crop in tight on this character's FACE and fill the frame with it — head only, front view, neutral expression, hair fully visible, cropped at the neck. Not the standing figure: this is a portrait of the head, and nothing they are wearing or carrying below the collar is in shot. Villian Rei, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "side from ref",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "side",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Turn this character to a full profile and show them from the side — one clean side-on view, head to feet, same person, same wardrobe. Villian Rei, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "full_body from ref keeps the identity (it ADDS information)",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "turnaround from ref keeps the identity",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "turnaround",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Character turnaround reference sheet, a 2x3 grid of six views of the SAME person, thin white gutters separating the cells, reading left-to-right top-to-bottom — view 1: front full-body standing relaxed; view 2: back full-body same stance; view 3: left profile full-body; view 4: right three-quarter full-body; view 5: face close-up front; view 6: face close-up right three-quarter — identical face, hair, build and wardrobe in every view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "face from ref with no name",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Crop in tight on this character's FACE and fill the frame with it — head only, front view, neutral expression, hair fully visible, cropped at the neck. Not the standing figure: this is a portrait of the head, and nothing they are wearing or carrying below the collar is in shot. Even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "identity already opens with the name",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "Villian Rei, short black bob, red jacket",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob, red jacket. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "a name with regex metacharacters",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Rei (v2)",
+        "identity": "short black bob, red jacket",
+        "style": "anime"
+      },
+      "prompt": "Rei (v2), short black bob, red jacket. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "no identity at all",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "neither name nor identity",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "",
+        "identity": "",
+        "style": "anime"
+      },
+      "prompt": "a person. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "environment master",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "master",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime"
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment alt_angle t2i",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "alt_angle",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime"
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide shot from the opposite side of the space, reverse angle, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment alt_angle FROM the master — the move leads",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "alt_angle",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Rotate the camera around this location to the opposite side and show the reverse angle. I want an entirely new vantage on the same place — reveal what was behind the first view, with the architecture and dressing already established staying recognisably the same place. A rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles, the location alone, architecture and props only, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment detail from ref",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "detail",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Move the camera in extremely close on ONE specific surface of this location — its materials, wear and dressing at arm's length, macro detail. Not the wide view: pick a single part of it and fill the frame with that. A rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles, the location alone, architecture and props only, raking motivated light across the materials. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment atmosphere from ref",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "atmosphere",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Hold this location and change only the air in it: the same place, re-lit by its own signature light, haze and depth carrying the mood. Move the camera enough that this reads as a different frame of the place, not the same one. A rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles, the location alone, architecture and props only, the location's own signature light, haze in the air. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment master from ref has no move and keeps the framing",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "master",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "a character role on a location falls back to master",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "turnaround",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime"
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "environment with no identity",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "master",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "",
+        "style": "anime"
+      },
+      "prompt": "Alternate City — Astronaut Rei Flashback. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "prop plain",
+      "family": "openai",
+      "spec": {
+        "kind": "prop",
+        "role": "ref",
+        "name": "Cloudy Glass Marble",
+        "identity": "a fist-sized marble of cloudy black glass with a hairline crack",
+        "style": "anime"
+      },
+      "prompt": "a fist-sized marble of cloudy black glass with a hairline crack. The object alone, centered, filling the frame, even flat lighting that shows its form and materials clearly, plain mid-grey background. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "prop readable",
+      "family": "openai",
+      "spec": {
+        "kind": "prop",
+        "role": "ref",
+        "name": "Registry Notice",
+        "identity": "a folded municipal notice on thin yellow paper",
+        "style": "anime",
+        "reads": "ALL RESIDENTS MUST RE-REGISTER BY 14 MARCH"
+      },
+      "prompt": "a folded municipal notice on thin yellow paper. Bearing the exact legible text \"ALL RESIDENTS MUST RE-REGISTER BY 14 MARCH\", laid flat, seen straight-on filling the frame, every printed element sharp and readable, even flat lighting that shows its form and materials clearly, plain mid-grey background. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "prop readable that depicts someone",
+      "family": "openai",
+      "spec": {
+        "kind": "prop",
+        "role": "ref",
+        "name": "Aki's sketchbook",
+        "identity": "a battered A5 sketchbook open to a double page",
+        "style": "anime",
+        "reads": "4 MARCH",
+        "depicts": "Haru Katagiri"
+      },
+      "prompt": "a battered A5 sketchbook open to a double page. Bearing the exact legible text \"4 MARCH\", the drawings on the page depict Haru Katagiri, rendered as hand-drawn studies of that person and no one else, laid flat, seen straight-on filling the frame, every printed element sharp and readable, even flat lighting that shows its form and materials clearly, plain mid-grey background. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "prop sited in its location",
+      "family": "openai",
+      "spec": {
+        "kind": "prop",
+        "role": "ref",
+        "name": "Scaffold warning sign",
+        "identity": "a yellow-and-black hazard sign zip-tied to scaffold tube",
+        "style": "anime",
+        "reads": "DANGER — OVERHEAD WORK",
+        "sited": true
+      },
+      "prompt": "a yellow-and-black hazard sign zip-tied to scaffold tube. Bearing the exact legible text \"DANGER — OVERHEAD WORK\", shown in place in its own location, at the height and position it actually occupies, the surrounding structure visible around it so its placement and scale are unambiguous, motivated natural light. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "prop sited with no text",
+      "family": "openai",
+      "spec": {
+        "kind": "prop",
+        "role": "ref",
+        "name": "Weapon rack",
+        "identity": "a floor-standing rack of brass-capped hardwood staffs",
+        "style": "anime",
+        "sited": true
+      },
+      "prompt": "a floor-standing rack of brass-capped hardwood staffs. Shown in place in its own location, at the height and position it actually occupies, the surrounding structure visible around it so its placement and scale are unambiguous, motivated natural light. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "scene still",
+      "family": "openai",
+      "spec": {
+        "kind": "scene",
+        "role": "still",
+        "name": "Villian Rei",
+        "identity": "the split floor of the atrium, rose light welling up through it",
+        "style": "anime"
+      },
+      "prompt": "the split floor of the atrium, rose light welling up through it. Cinematic frame, 16:9, motivated natural light. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "scene with the world's vfx grammar",
+      "family": "openai",
+      "spec": {
+        "kind": "scene",
+        "role": "still",
+        "name": "Villian Rei",
+        "identity": "the portal opening over the street",
+        "style": "anime",
+        "world": {
+          "era": "1974",
+          "palette": "indigo and rose, sodium amber, wet asphalt black",
+          "style_notes": "practical lighting only, no lens flares",
+          "vfx_language": "ribbons of emberlight"
+        }
+      },
+      "prompt": "the portal opening over the street. Cinematic frame, 16:9, motivated natural light, set in 1974, palette of indigo and rose, sodium amber, wet asphalt black, practical lighting only, no lens flares, all magical effects rendered as ribbons of emberlight. Rendered in anime style, with coherent art direction and high detail."
+    },
+    {
+      "name": "character with the whole world bible",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "world": {
+          "era": "1974",
+          "palette": "indigo and rose, sodium amber, wet asphalt black",
+          "style_notes": "practical lighting only, no lens flares",
+          "vfx_language": "ribbons of emberlight"
+        }
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop, set in 1974, palette of indigo and rose, sodium amber, wet asphalt black. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "a face plate takes the era and NOT the palette",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "world": {
+          "era": "1974",
+          "palette": "indigo and rose, sodium amber, wet asphalt black",
+          "style_notes": "practical lighting only, no lens flares",
+          "vfx_language": "ribbons of emberlight"
+        }
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Villian Rei, short black bob with a white streak at the left temple, amber eyes, even neutral studio key light from the front, plain seamless mid-grey backdrop, set in 1974. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "style_notes ride a location and not a character",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "master",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "world": {
+          "era": "1974",
+          "palette": "indigo and rose, sodium amber, wet asphalt black",
+          "style_notes": "practical lighting only, no lens flares",
+          "vfx_language": "ribbons of emberlight"
+        }
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light, set in 1974, palette of indigo and rose, sodium amber, wet asphalt black, practical lighting only, no lens flares. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "world with era only",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "world": {
+          "era": "1974"
+        }
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop, set in 1974. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "world is not a dict",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "world": "1974"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "a director's tweak is appended",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "note": "make the jacket black and take the trainers off"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop, make the jacket black and take the trainers off. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "empty style falls back",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": ""
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. consistent character design, high detail"
+    },
+    {
+      "name": "style on a location says art direction, not character design",
+      "family": "openai",
+      "spec": {
+        "kind": "environment",
+        "role": "master",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "cinematic 35mm"
+      },
+      "prompt": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles. The location alone, architecture and props only, wide establishing shot at eye level, motivated natural light. Rendered in cinematic 35mm style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    },
+    {
+      "name": "messy whitespace everywhere",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "  Villian   Rei ",
+        "identity": " short  black \n bob ",
+        "style": " anime  ",
+        "note": "  do it  "
+      },
+      "prompt": "Villian Rei, short black bob. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop, do it. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "an identity ending in a period",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak.",
+        "style": "anime"
+      },
+      "prompt": "Villian Rei, short black bob with a white streak. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "a note ending in a period",
+      "family": "openai",
+      "spec": {
+        "kind": "character",
+        "role": "full_body",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime",
+        "note": "Make it rain."
+      },
+      "prompt": "Villian Rei, short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers. Full-body shot, standing in a neutral pose, front view, even neutral studio key light from the front, plain seamless mid-grey backdrop, Make it rain. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "google composes identically",
+      "family": "google",
+      "spec": {
+        "kind": "character",
+        "role": "face",
+        "name": "Villian Rei",
+        "identity": "short black bob with a white streak at the left temple, amber eyes, a slight build, wearing a cropped red jacket over a grey tee, black cargo trousers and scuffed white trainers",
+        "style": "anime"
+      },
+      "prompt": "A tight head-and-hair portrait that fills the frame, front view, neutral expression, cropped at the neck. Villian Rei, short black bob with a white streak at the left temple, amber eyes, even neutral studio key light from the front, plain seamless mid-grey backdrop. Rendered in anime style, with consistent character design and high detail."
+    },
+    {
+      "name": "google, an alt angle from the master",
+      "family": "google",
+      "spec": {
+        "kind": "environment",
+        "role": "alt_angle",
+        "name": "Alternate City — Astronaut Rei Flashback",
+        "identity": "a rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles",
+        "style": "anime",
+        "from_ref": true
+      },
+      "prompt": "Rotate the camera around this location to the opposite side and show the reverse angle. I want an entirely new vantage on the same place — reveal what was behind the first view, with the architecture and dressing already established staying recognisably the same place. A rain-slicked alternate-city street under sodium light, shuttered storefronts either side, a tram line running down the middle and cables sagging overhead between leaning poles, the location alone, architecture and props only, motivated natural light. Rendered in anime style, with coherent art direction and high detail. The place stands completely empty of people — no person, no figure, no crowd, no silhouette anywhere in the frame."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "_comment": "LatentSync 1.5 lip-sync (ComfyUI-LatentSyncWrapper). Inputs: a silent take video + the dialogue audio. Models auto-download on first use. Worker injects file/audio filenames + seed/steps.",
+  "1": { "class_type": "LoadVideo", "inputs": { "file": "example.mp4" } },
+  "2": { "class_type": "GetVideoComponents", "inputs": { "video": ["1", 0] } },
+  "3": { "class_type": "LoadAudio", "inputs": { "audio": "example.mp3" } },
+  "4": { "class_type": "VideoLengthAdjuster", "inputs": { "images": ["2", 0], "audio": ["3", 0], "mode": "loop_to_audio", "fps": 25.0, "silent_padding_sec": 0.5 } },
+  "5": { "class_type": "LatentSyncNode", "inputs": { "images": ["4", 0], "audio": ["4", 1], "seed": 1247, "lips_expression": 1.5, "inference_steps": 20 } },
+  "6": { "class_type": "CreateVideo", "inputs": { "images": ["5", 0], "fps": 25.0, "audio": ["5", 1] } },
+  "7": { "class_type": "SaveVideo", "inputs": { "video": ["6", 0], "filename_prefix": "neon/lipsync", "format": "auto", "codec": "auto" } }
+}

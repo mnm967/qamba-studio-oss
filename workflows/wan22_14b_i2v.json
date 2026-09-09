@@ -1,0 +1,18 @@
+{
+  "_comment": "Wan 2.2 14B MoE i2v. start_image -> WanImageToVideo.",
+  "1": { "class_type": "UNETLoader", "inputs": { "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default" } },
+  "2": { "class_type": "UNETLoader", "inputs": { "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default" } },
+  "3": { "class_type": "CLIPLoader", "inputs": { "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan", "device": "default" } },
+  "4": { "class_type": "VAELoader", "inputs": { "vae_name": "wan_2.1_vae.safetensors" } },
+  "5": { "class_type": "CLIPTextEncode", "inputs": { "text": "cinematic anime, neon city", "clip": ["3", 0] } },
+  "6": { "class_type": "CLIPTextEncode", "inputs": { "text": "blurry, low quality, watermark, text", "clip": ["3", 0] } },
+  "7": { "class_type": "ModelSamplingSD3", "inputs": { "model": ["1", 0], "shift": 5.0 } },
+  "8": { "class_type": "ModelSamplingSD3", "inputs": { "model": ["2", 0], "shift": 5.0 } },
+  "15": { "class_type": "LoadImage", "inputs": { "image": "example.png" } },
+  "9": { "class_type": "WanImageToVideo", "inputs": { "positive": ["5", 0], "negative": ["6", 0], "vae": ["4", 0], "width": 1280, "height": 720, "length": 81, "batch_size": 1, "start_image": ["15", 0] } },
+  "10": { "class_type": "KSamplerAdvanced", "inputs": { "model": ["7", 0], "add_noise": "enable", "noise_seed": 0, "steps": 20, "cfg": 3.5, "sampler_name": "euler", "scheduler": "simple", "positive": ["9", 0], "negative": ["9", 1], "latent_image": ["9", 2], "start_at_step": 0, "end_at_step": 10, "return_with_leftover_noise": "enable" } },
+  "11": { "class_type": "KSamplerAdvanced", "inputs": { "model": ["8", 0], "add_noise": "disable", "noise_seed": 0, "steps": 20, "cfg": 3.5, "sampler_name": "euler", "scheduler": "simple", "positive": ["9", 0], "negative": ["9", 1], "latent_image": ["10", 0], "start_at_step": 10, "end_at_step": 10000, "return_with_leftover_noise": "disable" } },
+  "12": { "class_type": "VAEDecode", "inputs": { "samples": ["11", 0], "vae": ["4", 0] } },
+  "13": { "class_type": "CreateVideo", "inputs": { "images": ["12", 0], "fps": 16 } },
+  "14": { "class_type": "SaveVideo", "inputs": { "video": ["13", 0], "filename_prefix": "neon/wan14b_i2v", "format": "auto", "codec": "auto" } }
+}

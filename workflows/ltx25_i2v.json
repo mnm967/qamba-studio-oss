@@ -1,0 +1,436 @@
+{
+ "_comment": "LTX 2.5 22B distilled IMAGE->video with built-in audio. `ltx25_t2v.json` plus core's `LTXVAddGuide` pinning the supplied frame at index 0, applied to BOTH passes and cropped off after each (`LTXVCropGuides`) \u2014 a guide is PREPENDED to the latent, so leaving it in upsamples it, re-guides on top of it and decodes it as extra frames. Generated from the t2v template so the loaders, the two ManualSigmas schedules and the audio branch cannot drift from the mode that is known to render. All core nodes; validated against a live engine's own /object_info. NOT yet proven by a render.",
+ "1": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+   "weight_dtype": "default"
+  }
+ },
+ "2": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+   "type": "ltxv",
+   "device": "default"
+  }
+ },
+ "3": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "ltx-2.5-video-vae-conv-bf16.safetensors"
+  }
+ },
+ "4": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "ltx-2.5-audio-vae-bf16.safetensors"
+  }
+ },
+ "5": {
+  "class_type": "LatentUpscaleModelLoader",
+  "inputs": {
+   "model_name": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "POSITIVE",
+   "clip": [
+    "2",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "NEGATIVE",
+   "clip": [
+    "2",
+    0
+   ]
+  }
+ },
+ "8": {
+  "class_type": "LTXVConditioning",
+  "inputs": {
+   "frame_rate": 24.0,
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ]
+  }
+ },
+ "9": {
+  "class_type": "EmptyLTXVLatentVideo",
+  "inputs": {
+   "width": 640,
+   "height": 352,
+   "length": 121,
+   "batch_size": 1
+  }
+ },
+ "10": {
+  "class_type": "LTXVEmptyLatentAudio",
+  "inputs": {
+   "frames_number": 121,
+   "frame_rate": 24,
+   "batch_size": 1,
+   "audio_vae": [
+    "4",
+    0
+   ]
+  }
+ },
+ "11": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "42",
+    2
+   ],
+   "audio_latent": [
+    "10",
+    0
+   ]
+  }
+ },
+ "12": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "13": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_ancestral"
+  }
+ },
+ "14": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+  }
+ },
+ "15": {
+  "class_type": "LTXVDualCFGGuider",
+  "inputs": {
+   "video_cfg": 1.0,
+   "audio_cfg": 1.0,
+   "model": [
+    "1",
+    0
+   ],
+   "positive": [
+    "42",
+    0
+   ],
+   "negative": [
+    "42",
+    1
+   ]
+  }
+ },
+ "16": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "12",
+    0
+   ],
+   "guider": [
+    "15",
+    0
+   ],
+   "sampler": [
+    "13",
+    0
+   ],
+   "sigmas": [
+    "14",
+    0
+   ],
+   "latent_image": [
+    "11",
+    0
+   ]
+  }
+ },
+ "17": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "16",
+    0
+   ]
+  }
+ },
+ "18": {
+  "class_type": "LTXVLatentUpsampler",
+  "inputs": {
+   "samples": [
+    "50",
+    2
+   ],
+   "upscale_model": [
+    "5",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ]
+  }
+ },
+ "19": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "43",
+    2
+   ],
+   "audio_latent": [
+    "17",
+    1
+   ]
+  }
+ },
+ "20": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "21": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_ancestral"
+  }
+ },
+ "22": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+  }
+ },
+ "23": {
+  "class_type": "LTXVDualCFGGuider",
+  "inputs": {
+   "video_cfg": 1.0,
+   "audio_cfg": 1.0,
+   "model": [
+    "1",
+    0
+   ],
+   "positive": [
+    "51",
+    0
+   ],
+   "negative": [
+    "51",
+    1
+   ]
+  }
+ },
+ "24": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "20",
+    0
+   ],
+   "guider": [
+    "23",
+    0
+   ],
+   "sampler": [
+    "21",
+    0
+   ],
+   "sigmas": [
+    "22",
+    0
+   ],
+   "latent_image": [
+    "19",
+    0
+   ]
+  }
+ },
+ "25": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "24",
+    0
+   ]
+  }
+ },
+ "26": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "52",
+    2
+   ],
+   "vae": [
+    "3",
+    0
+   ]
+  }
+ },
+ "27": {
+  "class_type": "LTXVAudioVAEDecode",
+  "inputs": {
+   "samples": [
+    "25",
+    1
+   ],
+   "audio_vae": [
+    "4",
+    0
+   ]
+  }
+ },
+ "28": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "fps": 24.0,
+   "images": [
+    "26",
+    0
+   ],
+   "audio": [
+    "27",
+    0
+   ]
+  }
+ },
+ "29": {
+  "class_type": "SaveVideo",
+  "inputs": {
+   "filename_prefix": "neon/ltx25_i2v",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "28",
+    0
+   ]
+  }
+ },
+ "40": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "START_IMAGE"
+  }
+ },
+ "42": {
+  "class_type": "LTXVAddGuide",
+  "inputs": {
+   "positive": [
+    "8",
+    0
+   ],
+   "negative": [
+    "8",
+    1
+   ],
+   "vae": [
+    "3",
+    0
+   ],
+   "latent": [
+    "9",
+    0
+   ],
+   "image": [
+    "40",
+    0
+   ],
+   "frame_idx": 0,
+   "strength": 1.0
+  }
+ },
+ "50": {
+  "class_type": "LTXVCropGuides",
+  "inputs": {
+   "positive": [
+    "42",
+    0
+   ],
+   "negative": [
+    "42",
+    1
+   ],
+   "latent": [
+    "17",
+    0
+   ]
+  }
+ },
+ "43": {
+  "class_type": "LTXVAddGuide",
+  "inputs": {
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ],
+   "latent": [
+    "18",
+    0
+   ],
+   "image": [
+    "40",
+    0
+   ],
+   "frame_idx": 0,
+   "strength": 1.0
+  }
+ },
+ "51": {
+  "class_type": "LTXVConditioning",
+  "inputs": {
+   "positive": [
+    "43",
+    0
+   ],
+   "negative": [
+    "43",
+    1
+   ],
+   "frame_rate": 24.0
+  }
+ },
+ "52": {
+  "class_type": "LTXVCropGuides",
+  "inputs": {
+   "positive": [
+    "51",
+    0
+   ],
+   "negative": [
+    "51",
+    1
+   ],
+   "latent": [
+    "25",
+    0
+   ]
+  }
+ }
+}

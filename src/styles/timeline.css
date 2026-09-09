@@ -1,0 +1,572 @@
+/* Timeline editor — desktop-first, token-driven. */
+
+.tledit { display: flex; flex-direction: column; height: calc(100vh - 63px); }
+
+/* preview */
+.tl-preview {
+  position: relative; background: #000; flex: 0 0 auto;
+  display: grid; place-items: center;
+  height: min(42vh, 480px);
+  border-bottom: 1px solid var(--line);
+}
+/* `img` is not decoration: a video lane legitimately holds stills (a dropped
+   photo, and the placeholder every generate action leaves while the GPU
+   works), and PreviewPlayer mounts those as <img> because a <video> can never
+   finish loading a JPEG. Both element types are one layer stack and must be
+   laid out identically — see lib/assetKind.isStill. */
+.tl-preview video, .tl-preview img {
+  max-width: 100%; max-height: 100%;
+  position: absolute; inset: 0; margin: auto;
+  opacity: 0; pointer-events: none;
+}
+.tl-preview video.active, .tl-preview img.active { opacity: 1; }
+.tl-preview .tl-prev-empty { color: var(--low); font-size: 13px; }
+/* A stalled active video is a network wait, not a broken player — say so. */
+.tl-prev-buffering {
+  position: absolute; top: 10px; right: 12px; z-index: 4;
+  font-family: var(--font-mono); font-size: 11px; color: var(--hi);
+  background: rgba(7, 9, 14, 0.55); backdrop-filter: blur(var(--glass-soft));
+  padding: 3px 9px; border-radius: 8px; border: 1px solid var(--line);
+  pointer-events: none;
+}
+.tl-prev-overlay {
+  position: absolute; left: 12px; bottom: 10px; z-index: 3;
+  font-family: var(--font-mono); font-size: 12px; color: var(--hi);
+  background: rgba(7, 9, 14, 0.55); backdrop-filter: blur(var(--glass-soft));
+  padding: 3px 9px; border-radius: 8px; border: 1px solid var(--line);
+}
+
+/* transport */
+.tl-transport {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.tl-transport .tp-btn {
+  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--elev); border: 1px solid var(--line); color: var(--hi);
+}
+.tl-transport .tp-time { font-family: var(--font-mono); font-size: 12.5px; color: var(--mid); }
+.tl-transport .tp-spacer { flex: 1; }
+.tl-transport .tp-action {
+  display: flex; align-items: center; gap: 6px; font-size: 12.5px;
+  padding: 7px 12px; border-radius: 10px;
+  background: var(--elev); border: 1px solid var(--line); color: var(--mid);
+}
+.tl-transport .tp-action.primary {
+  background: var(--blue-dim); border-color: rgba(90, 162, 255, 0.4); color: var(--blue);
+}
+.tl-transport .tp-action:disabled { opacity: 0.45; }
+
+/* timeline body */
+.tl-body { flex: 1; overflow: auto; position: relative; background: var(--bg); }
+.tl-inner { position: relative; min-width: 100%; }
+
+.tl-ruler {
+  position: sticky; top: 0; z-index: 6; height: 26px;
+  background: linear-gradient(180deg, var(--surface), rgba(17, 21, 30, 0.95));
+  border-bottom: 1px solid var(--line); cursor: pointer;
+}
+.tl-ruler canvas { display: block; height: 26px; }
+
+.tl-lane { position: relative; border-bottom: 1px solid var(--line); }
+.tl-lane.video { height: 64px; }
+.tl-lane.audio { height: 44px; }
+.tl-lane-label {
+  position: sticky; left: 0; z-index: 5; float: left;
+  width: 44px; height: 100%; display: grid; place-items: center;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--low);
+  background: var(--surface); border-right: 1px solid var(--line);
+}
+
+.tl-clip {
+  position: absolute; top: 5px; bottom: 5px; border-radius: 9px;
+  background: linear-gradient(180deg, #182238, #131b2c);
+  border: 1px solid var(--line2); overflow: hidden; cursor: grab;
+  user-select: none; -webkit-user-select: none;
+}
+.tl-clip.selected { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue), 0 0 14px -4px var(--blue); }
+.tl-clip.audio-clip { background: linear-gradient(180deg, #1c2620, #141c17); }
+.tl-clip .clip-label {
+  position: absolute; left: 7px; top: 4px; right: 18px; z-index: 2;
+  font-size: 10.5px; font-weight: 600; color: var(--hi);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.tl-clip .clip-sub {
+  position: absolute; left: 7px; bottom: 3px; z-index: 2;
+  font-family: var(--font-mono); font-size: 9px; color: var(--mid);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.tl-clip .clip-ops {
+  position: absolute; right: 5px; top: 4px; z-index: 2; display: flex; gap: 3px;
+}
+.tl-clip .clip-ops span {
+  font-size: 8.5px; font-weight: 700; padding: 1px 4px; border-radius: 4px;
+  background: var(--amber-dim); color: var(--amber);
+}
+.tl-clip .clip-thumb { position: absolute; inset: 0; opacity: 0.5; background: center/cover no-repeat; }
+.tl-clip canvas.clip-wave { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.8; }
+.tl-clip .trim-handle {
+  position: absolute; top: 0; bottom: 0; width: 8px; z-index: 4; cursor: ew-resize;
+}
+.tl-clip .trim-handle.l { left: 0; border-left: 3px solid transparent; }
+.tl-clip .trim-handle.r { right: 0; border-right: 3px solid transparent; }
+.tl-clip.selected .trim-handle.l { border-left-color: var(--blue); }
+.tl-clip.selected .trim-handle.r { border-right-color: var(--blue); }
+.tl-clip .transition-badge {
+  position: absolute; left: -1px; top: 0; bottom: 0; width: 12px; z-index: 3;
+  background: linear-gradient(90deg, var(--purple), transparent);
+  opacity: 0.65;
+}
+
+.tl-playhead {
+  position: absolute; top: 0; bottom: 0; width: 2px; z-index: 7;
+  background: #fff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+}
+.tl-snapline {
+  position: absolute; top: 0; bottom: 0; width: 1px; z-index: 6;
+  background: var(--amber); opacity: 0.9; pointer-events: none;
+}
+
+/* hover preview + takes popover */
+.tl-hoverprev {
+  position: fixed; z-index: 40; width: 240px; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--line2); background: var(--elev);
+  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.7); pointer-events: none;
+}
+.tl-hoverprev video { width: 100%; display: block; }
+.tl-hoverprev .hp-meta {
+  padding: 5px 9px; font-size: 10.5px; color: var(--mid);
+  font-family: var(--font-mono);
+}
+
+.takespop {
+  position: fixed; z-index: 45; width: 300px; max-height: 380px; overflow: auto;
+  border-radius: 14px; border: 1px solid var(--line2); background: var(--elev);
+  box-shadow: 0 16px 50px -10px rgba(0, 0, 0, 0.8); padding: 10px;
+}
+.takespop .tk-head { font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--mid); margin: 2px 4px 8px; }
+.takespop .tk-row {
+  display: flex; gap: 8px; align-items: center; padding: 6px; border-radius: 10px;
+  border: 1px solid transparent;
+}
+.takespop .tk-row.active { border-color: rgba(255, 180, 84, 0.4); background: var(--amber-dim); }
+.takespop .tk-row video { width: 96px; border-radius: 7px; display: block; }
+.takespop .tk-info { flex: 1; min-width: 0; font-size: 11px; color: var(--mid); }
+.takespop .tk-actions { display: flex; flex-direction: column; gap: 4px; }
+.takespop .tk-btn {
+  font-size: 10.5px; padding: 3px 8px; border-radius: 7px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--hi);
+}
+.takespop .tk-btn.keep { color: var(--amber); border-color: rgba(255, 180, 84, 0.4); }
+
+/* inspector */
+.tl-inspector {
+  position: fixed; right: 14px; top: 76px; bottom: 14px; width: 300px; z-index: 30;
+  background: rgba(20, 26, 38, 0.92); backdrop-filter: blur(10px);
+  border: 1px solid var(--line2); border-radius: 16px; padding: 14px;
+  overflow: auto;
+}
+.tl-inspector h3 {
+  margin: 0 0 4px; font-size: 14px; font-weight: 650;
+}
+.tl-inspector .insp-sub { font-size: 11px; color: var(--low); font-family: var(--font-mono); margin-bottom: 12px; }
+.tl-inspector .insp-sec { margin-top: 14px; }
+.tl-inspector .insp-sec .label {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--mid);
+}
+.insp-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.insp-chip {
+  font-size: 11.5px; padding: 6px 10px; border-radius: 9px;
+  background: var(--surface); border: 1px solid var(--line); color: var(--hi);
+}
+.insp-chip.on { background: var(--blue-dim); border-color: rgba(90, 162, 255, 0.45); color: var(--blue); }
+.insp-chip.danger { color: var(--red); border-color: rgba(255, 90, 90, 0.3); }
+.insp-oplist { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
+.insp-op {
+  display: flex; align-items: center; gap: 8px; font-size: 11.5px;
+  font-family: var(--font-mono); padding: 6px 9px; border-radius: 8px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.insp-op button { margin-left: auto; color: var(--red); display: grid; place-items: center; }
+.insp-input {
+  width: 100%; margin-top: 8px; background: var(--surface);
+  border: 1px solid var(--line2); border-radius: 9px; color: var(--hi);
+  font-size: 12.5px; padding: 8px 10px; font-family: inherit;
+}
+
+@media (max-width: 899px) {
+  /* mobile companion: playback + selection, no precision editing */
+  .tl-inspector { position: static; width: auto; margin: 10px; }
+  .tl-preview { height: 38vh; }
+}
+
+/* bare mode: the workspace stage supplies chrome; media fills the frame */
+.tl-preview-bare { border: none; border-radius: 0; width: 100%; height: 100%; aspect-ratio: auto; background: #000; }
+
+/* Custom Timeline Block Context Menu */
+.tl-contextmenu {
+  width: 220px;
+  background: var(--surface, #141a26);
+  border: 1px solid var(--line2, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(90, 162, 255, 0.15);
+  backdrop-filter: blur(16px);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  user-select: none;
+  animation: contextMenuPop 0.12s ease-out;
+}
+
+@keyframes contextMenuPop {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.tl-contextmenu .menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px 4px;
+}
+.tl-contextmenu .menu-header .clip-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--hi, #e6ecf8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+.tl-contextmenu .menu-header .clip-dur {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: var(--mid, #8b93a7);
+}
+.tl-contextmenu .menu-divider {
+  height: 1px;
+  background: var(--line, rgba(255, 255, 255, 0.08));
+  margin: 4px 2px;
+}
+.tl-contextmenu .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--hi, #e6ecf8);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+/* The chord this item answers to. Pushed to the right edge and quiet: it is a
+   reminder for next time, not part of reading the row. A shortcut nobody can
+   discover is a shortcut that is barely shipped. */
+.tl-contextmenu .menu-item .menu-key {
+  margin-left: auto;
+  padding-left: 10px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--mid, #8b93a7);
+  flex-shrink: 0;
+}
+.tl-contextmenu .menu-item.disabled .menu-key { opacity: 0.7; }
+.tl-contextmenu .menu-item:hover:not(.disabled) .menu-key { color: rgba(255, 255, 255, 0.75); }
+
+.tl-contextmenu .menu-item .menu-icon {
+  color: var(--blue, #5aa2ff);
+  flex-shrink: 0;
+}
+.tl-contextmenu .menu-item:hover:not(.disabled) {
+  background: rgba(90, 162, 255, 0.15);
+  color: #fff;
+}
+.tl-contextmenu .menu-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tl-contextmenu .menu-item.danger .menu-icon { color: #e46e6e; }
+.tl-contextmenu .menu-item.danger:hover:not(.disabled) { background: rgba(228, 110, 110, 0.16); }
+/* A state the menu reports rather than an action it offers. */
+.tl-contextmenu .menu-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px 6px;
+  font-size: 11px;
+  color: var(--mid, #8b93a7);
+}
+
+/* Block Action Modal */
+.block-action-modal {
+  width: 480px;
+  max-width: 90vw;
+  max-height: calc(100vh - 60px);
+}
+.block-action-modal form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+/* Says the anchor is a placeholder still rather than the end of a shot. Amber
+   and not red: the extract worked and the render will run — what is wrong is
+   the source, and the fix is to wait rather than to retry. */
+.bam-warn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.45;
+  background: rgba(255, 176, 32, 0.1);
+  border: 1px solid rgba(255, 176, 32, 0.28);
+  color: #ffc55c;
+}
+.bam-frame-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+}
+.bam-frame-label {
+  font: 600 10.5px/1.15 var(--font-mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5e6678;
+  margin-bottom: 10px;
+}
+.bam-frame-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #5aa2ff;
+  padding: 16px 0;
+  justify-content: center;
+}
+.bam-frame-loading .spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+/* The PICTURE is the sized element, not the box around it.
+   A 100%-wide box at a fixed 160px is 2.85:1, so a 16:9 frame sat inside it
+   pillarboxed — black bars either side of the one thing the panel is for. The
+   `<img>` carries its own dimensions, so bounding it on BOTH axes and letting
+   it size itself is exact for any render shape (a vertical block caps on the
+   height, a wide one on the width) with no ratio to plumb through. The chrome
+   goes on the image for the same reason: a container would be back to a box
+   that can disagree with what is in it. */
+.bam-frame-thumb {
+  display: flex;
+  justify-content: center;
+}
+.bam-frame-thumb video,
+.bam-frame-thumb img {
+  display: block;
+  max-width: 100%;
+  /* 16:9 fills the modal's width at ~243px; anything taller caps here. */
+  max-height: 260px;
+  /* A no-op while the box is the picture's own shape — and the guard for when
+     it is not: `layerStyle` places its crop window assuming the picture is
+     letterboxed into this element, so a media whose intrinsic ratio disagrees
+     with `assets.width/height` must letterbox rather than stretch. */
+  object-fit: contain;
+  border-radius: 8px;
+  background: #000;
+}
+/* Source timecode under an anchor. Quiet — it is evidence, not a control —
+   but always present: a wrong frame and a right one look the same. */
+.bam-stamp {
+  display: block; font-style: normal;
+  font: 500 10px/1.3 var(--font-mono, monospace);
+  color: #8fc2ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bam-stamp span { color: #5e6678; }
+/* The ops line. Its own row under the timecode — together they overflow a
+   320px tile, and this half is the one that is usually absent. */
+.bam-stamp b {
+  display: block; font-weight: 500; color: #e8c268;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+/* Model + length. One card because the length's RANGE belongs to the model:
+   switching the picker moves the slider's ends, and separating them would let
+   the two read as unrelated controls. */
+.bam-render {
+  display: flex; flex-direction: column; gap: 9px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px; padding: 12px;
+}
+.bam-row { display: flex; align-items: center; gap: 10px; }
+.bam-lbl {
+  flex: 0 0 92px;
+  font: 600 10.5px/1.15 var(--font-mono, monospace);
+  letter-spacing: 0.08em; text-transform: uppercase; color: #5e6678;
+}
+.bam-sel {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
+  height: 34px; padding: 0 11px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #eaeef6; font-size: 12.5px; cursor: pointer; text-align: left;
+}
+.bam-sel:hover { border-color: rgba(90, 162, 255, 0.5); }
+.bam-sel > span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bam-promptbar { display: flex; align-items: center; gap: 7px; }
+.bam-mini {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 24px; padding: 0 9px; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9aa4b6; font: 600 11px/1 var(--font-mono, monospace); cursor: pointer;
+}
+.bam-mini:hover:not(:disabled) { border-color: rgba(90, 162, 255, 0.5); color: #eaeef6; }
+.bam-mini.on { color: #8fc2ff; border-color: rgba(90, 162, 255, 0.32); background: rgba(90, 162, 255, 0.09); }
+.bam-mini:disabled { opacity: 0.45; cursor: default; }
+/* The adapter row grows: a stack plus a provenance note is taller than one
+   line, so the label sits at the top rather than centring against it. */
+.bam-loras { align-items: flex-start; }
+.bam-loras .bam-lbl { padding-top: 8px; }
+.bam-loras .bam-note { margin-top: 6px; }
+.bam-check {
+  gap: 8px; cursor: pointer; align-items: center;
+  font-size: 12.5px; color: #cfd6e4;
+}
+.bam-check input { accent-color: #5aa2ff; width: 15px; height: 15px; cursor: pointer; }
+.bam-range { flex: 1; min-width: 0; accent-color: #5aa2ff; }
+.bam-dur { flex: 0 0 auto; width: 54px; text-align: right; font-size: 12px; color: #eaeef6; }
+.bam-note {
+  display: flex; align-items: center; gap: 6px;
+  font: 500 10.5px/1.45 var(--font-mono, monospace); color: #5e6678;
+}
+.bam-note.warn { color: #e8c268; }
+.bam-frame-none {
+  display: grid; place-items: center; height: 100px; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.14);
+  font: 500 11px/1.3 var(--font-mono, monospace); color: #5e6678;
+}
+.bam-dual-frames {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bam-frame-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bam-frame-item span {
+  font: 600 10px/1.15 var(--font-mono, monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5e6678;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* `cover` at a fixed 100px was worse than the pillarbox above: these two
+   frames are what the transition is generated BETWEEN, and it silently cut
+   the sides off both. Same rule — the element sizes itself and nothing crops.
+   The preview is a paused <video> where the clip is one, so both selectors. */
+.bam-frame-item video,
+.bam-frame-item img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 140px;
+  object-fit: contain;               /* same guard as `.bam-frame-thumb` */
+  border-radius: 8px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Save as new block ──────────────────────────────────────────────────────
+   `sab-` prefixed for the reason `tas-` and `pr-` are: `legacy.css` owns bare
+   names like `.bar`, `.nm` and `.dot` at global scope, and out-specifying one
+   still inherits every property you did not think to list. */
+.sab-lede {
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #a8b0c0;
+}
+.sab-lede b { color: #dbe2ee; font-weight: 600; }
+
+.sab-opts { display: flex; flex-direction: column; gap: 8px; }
+
+.sab-opt {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 12px 13px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background .12s ease, border-color .12s ease;
+}
+.sab-opt:hover { background: rgba(255, 255, 255, 0.045); border-color: rgba(255, 255, 255, 0.14); }
+.sab-opt[data-on] {
+  background: rgba(90, 162, 255, 0.10);
+  border-color: rgba(90, 162, 255, 0.55);
+}
+/* Keyboard users get the same affordance the pointer does — these are the
+   only two controls in the dialog that carry state. */
+.sab-opt:focus-visible { outline: 2px solid rgba(90, 162, 255, .75); outline-offset: 2px; }
+
+/* The radio. A real one would inherit legacy's input styling, and the state
+   is already on the row — this just makes "one of these two" legible at a
+   glance rather than implied by a tint. */
+.sab-tick {
+  flex: none;
+  width: 15px; height: 15px;
+  margin-top: 2px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  display: grid; place-items: center;
+  transition: border-color .12s ease;
+}
+.sab-opt[data-on] .sab-tick { border-color: #5aa2ff; }
+.sab-dot {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: #5aa2ff;
+  transform: scale(0);
+  transition: transform .12s ease;
+}
+.sab-opt[data-on] .sab-dot { transform: scale(1); }
+
+.sab-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.sab-title {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600; color: #e7ecf5;
+}
+.sab-ico { display: inline-flex; color: #7d8598; }
+.sab-opt[data-on] .sab-ico { color: #5aa2ff; }
+
+.sab-chip {
+  font-size: 9.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 999px;
+  color: #8b93a7; background: rgba(255, 255, 255, 0.06);
+}
+.sab-opt[data-on] .sab-chip { color: #9ec7ff; background: rgba(90, 162, 255, 0.16); }
+
+/* Where it ends up — the line people are actually choosing between. */
+.sab-where { font-size: 12px; color: #c2cadb; }
+.sab-note { font-size: 11.5px; line-height: 1.5; color: #838b9e; }
+

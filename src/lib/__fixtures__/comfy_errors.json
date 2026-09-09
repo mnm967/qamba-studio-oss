@@ -1,0 +1,22 @@
+{
+ "value_not_in_list": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"prompt_outputs_failed_validation\", \"message\": \"Prompt outputs failed validation\", \"details\": \"\", \"extra_info\": {}}, \"node_errors\": {\"1\": {\"errors\": [{\"type\": \"value_not_in_list\", \"message\": \"Value not in list\", \"details\": \"unet_name: 'NotInstalled_v3_fp16.safetensors' not in ['Wan2.2-TI2V-5B-Q6_K.gguf', 'Wan2.2-TI2V-5B-Q8_0.gguf']\", \"extra_info\": {\"input_name\": \"unet_name\", \"input_config\": [[\"Wan2.2-TI2V-5B-Q6_K.gguf\", \"Wan2.2-TI2V-5B-Q8_0.gguf\"], {}], \"received_value\": \"NotInstalled_v3_fp16.safetensors\"}}], \"dependent_outputs\": [\"14\"], \"class_type\": \"UnetLoaderGGUF\"}}}"
+ },
+ "missing_class": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"missing_node_type\", \"message\": \"Node 'SomeCivitaiCustomNode' not found. The custom node may not be installed.\", \"details\": \"Node ID '#999'\", \"extra_info\": {\"node_id\": \"999\", \"class_type\": \"SomeCivitaiCustomNode\", \"node_title\": \"SomeCivitaiCustomNode\"}}, \"node_errors\": {}}"
+ },
+ "required_missing": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"prompt_outputs_failed_validation\", \"message\": \"Prompt outputs failed validation\", \"details\": \"\", \"extra_info\": {}}, \"node_errors\": {\"4\": {\"errors\": [{\"type\": \"required_input_missing\", \"message\": \"Required input is missing\", \"details\": \"text\", \"extra_info\": {\"input_name\": \"text\"}}], \"dependent_outputs\": [\"14\"], \"class_type\": \"CLIPTextEncode\"}}}"
+ },
+ "dangling": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"prompt_outputs_failed_validation\", \"message\": \"Prompt outputs failed validation\", \"details\": \"\", \"extra_info\": {}}, \"node_errors\": {\"4\": {\"errors\": [{\"type\": \"exception_during_inner_validation\", \"message\": \"Exception when validating inner node\", \"details\": \"'404'\", \"extra_info\": {\"input_name\": \"positive\", \"input_config\": [\"CONDITIONING\", {\"tooltip\": \"The conditioning describing the attributes you want to include in the image.\"}], \"exception_message\": \"'404'\", \"exception_type\": \"KeyError\", \"traceback\": [\"  File \\\"/home/you/.local/share/studio.qamba.desktop/engine/ComfyUI/execution.py\\\", line 955, in validate_inputs\\n    r = await validate_inputs(prompt_id, prompt, o_id, validated, visiting)\\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n\", \"  File \\\"/home/you/.local/share/studio.qamba.desktop/engine/ComfyUI/execution.py\\\", line 933, in validate_inputs\\n    o_class_type = prompt[o_id]['class_type']\\n                   ~~~~~~^^^^^^\\n\"], \"linked_node\": [\"4\", 0]}}], \"dependent_outputs\": [\"14\"], \"class_type\": \"CLIPTextEncode\"}}}"
+ },
+ "near_miss_file": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"prompt_outputs_failed_validation\", \"message\": \"Prompt outputs failed validation\", \"details\": \"\", \"extra_info\": {}}, \"node_errors\": {\"1\": {\"errors\": [{\"type\": \"value_not_in_list\", \"message\": \"Value not in list\", \"details\": \"unet_name: 'Wan2.2-TI2V-5B-Q8_0.safetensors' not in ['Wan2.2-TI2V-5B-Q6_K.gguf', 'Wan2.2-TI2V-5B-Q8_0.gguf']\", \"extra_info\": {\"input_name\": \"unet_name\", \"input_config\": [[\"Wan2.2-TI2V-5B-Q6_K.gguf\", \"Wan2.2-TI2V-5B-Q8_0.gguf\"], {}], \"received_value\": \"Wan2.2-TI2V-5B-Q8_0.safetensors\"}}], \"dependent_outputs\": [\"14\"], \"class_type\": \"UnetLoaderGGUF\"}}}"
+ }
+}

@@ -1,0 +1,10 @@
+requests>=2.31
+boto3>=1.34
+openai>=1.40
+# Crash reporting (worker/errors.py). POD ONLY, and deliberately not a hard
+# dependency of the code: the desktop ships this same tree to a Python that has
+# `requests` and nothing else, so `errors.init()` is written to find nothing and
+# say so rather than to fail. A `publish_pod_build.mjs` tarball carries the code
+# and not the package — a box that has not re-run this file comes up reporting
+# `sentry=off:No module named 'sentry_sdk'` in its first log line.
+sentry-sdk>=2.20

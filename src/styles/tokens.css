@@ -1,0 +1,109 @@
+/* The two faces --font-ui / --font-mono name. This lives with the tokens that
+   reference it: legacy.css imports the same URL, but that file belongs to v1
+   and retiring it must not silently drop the v2 app to a system font. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Qamba Studio design tokens — the single palette source for v2 surfaces.
+   legacy.css re-declares the same values scoped to .app; both resolve
+   identically, so legacy and v2 screens can coexist during the migration. */
+:root {
+  --bg: #07090e;
+  --surface: #11151e;
+  --elev: #141a26;
+  --hi: #eaeef6;
+  --mid: #9aa4b6;
+  --low: #5e6678;
+  --line: rgba(255, 255, 255, 0.07);
+  --line2: #222a39;
+  --blue: #5aa2ff;
+  --blue-dim: rgba(90, 162, 255, 0.13);
+  --amber: #ffb454;
+  --amber-dim: rgba(255, 180, 84, 0.12);
+  --red: #ff8080;
+  --red-dim: rgba(255, 90, 90, 0.14);
+  --purple: #c97aff;
+
+  --font-ui: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Glass surfaces (backdrop-filter blur radii used across the app) */
+  --glass-bar: 8px;
+  --glass-tabs: 12px;
+  --glass-soft: 3px;
+
+  /* Room the desktop shell's window controls need at the top-left, written by
+     src/lib/titlebar.ts. Zero everywhere but a macOS build, where
+     `titleBarStyle: "Overlay"` draws the traffic lights OVER the page — see
+     that module for which surfaces claim it and why the centred columns do
+     not. Declared here so a surface can read it before the bridge answers. */
+  --titlebar-inset: 0px;
+
+  color-scheme: dark;
+}
+
+/* Workspace-shell additions (design handoff, wave 2) */
+:root {
+  --body-dim: #c8cfdb;
+  --text-soft: #dfe4ec;
+  --st-planned: #5b6478;
+  --st-queued: #8b93a7;
+  --st-generating: #e8c268;
+  --st-generated: #6fd08c;
+  --st-failed: #e46e6e;
+  --st-stale: #c98fe8;
+}
+
+/* Boot fallback (main.tsx's Suspense): shown before ANY route chunk or its
+   stylesheet has arrived, so it may depend on nothing but this file — which is
+   the one stylesheet main.tsx imports itself. Without it the first load was a
+   bare dark window until the whole Workspace chunk parsed. */
+.boot-load {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  gap: 10px; background: #07090e; color: #5e6678;
+  font: 500 13px/1 "Space Grotesk", system-ui, sans-serif;
+}
+.boot-load i {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid rgba(90, 162, 255, 0.25); border-top-color: #5aa2ff;
+  animation: boot-spin 0.9s linear infinite;
+}
+@keyframes boot-spin { to { transform: rotate(360deg); } }
+
+/* Crash screen (components/app/CrashScreen.tsx): what a render-time throw
+   shows instead of the blank window React leaves behind. Under the SAME
+   constraint as .boot-load above and here for the same reason — it can render
+   before any route stylesheet exists, and one of the errors it catches is a
+   route chunk that failed to load at all. Literals rather than var() for the
+   same reason: this file defines them on :root, and a crash during boot must
+   not depend on that having been reached. */
+.crash {
+  position: fixed; inset: 0; z-index: 9999; display: flex;
+  align-items: center; justify-content: center; padding: 24px;
+  background: #07090e; color: #eaeef6;
+  font: 400 13px/1.5 "Space Grotesk", system-ui, sans-serif;
+}
+.crash-card {
+  max-width: 520px; width: 100%;
+  border: 1px solid #222a39; border-radius: 12px;
+  background: #11151e; padding: 22px 24px;
+}
+.crash-card h1 { margin: 0 0 10px; font-size: 15px; font-weight: 600; color: #eaeef6; }
+.crash-msg {
+  margin: 0 0 18px; padding: 10px 12px;
+  border-radius: 8px; border: 1px solid rgba(255, 90, 90, 0.24);
+  background: rgba(255, 90, 90, 0.09); color: #ff8080;
+  font: 400 12px/1.5 "JetBrains Mono", ui-monospace, monospace;
+  /* A minified stack or a long provider body must not blow the card open. */
+  max-height: 180px; overflow: auto; overflow-wrap: anywhere;
+}
+.crash-acts { display: flex; gap: 8px; }
+.crash-acts button {
+  border-radius: 7px; padding: 7px 14px; cursor: pointer;
+  font: 500 12px/1 "Space Grotesk", system-ui, sans-serif;
+}
+.crash-go { border: 1px solid #5aa2ff; background: rgba(90, 162, 255, 0.13); color: #eaeef6; }
+.crash-go:hover { background: rgba(90, 162, 255, 0.22); }
+.crash-alt { border: 1px solid #222a39; background: transparent; color: #9aa4b6; }
+.crash-alt:hover { color: #eaeef6; border-color: #5e6678; }
+.crash-id { margin: 14px 0 0; font-size: 11px; color: #5e6678; }
+.crash-id code { font-family: "JetBrains Mono", ui-monospace, monospace; color: #9aa4b6; }

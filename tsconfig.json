@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "isolatedModules": true,
+    // `node --test` resolves ESM strictly and will not guess an extension, so a
+    // module that is BOTH imported by a test and imports another src module has
+    // to spell the `.ts` out — fxCurves → audioFx, workflowAdapter → workflows,
+    // localRender → comfyProgress. Vite resolves the explicit specifier too and
+    // noEmit means nothing is written that could carry a wrong path; this flag
+    // is what stops tsc calling it an error.
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  // *.test.ts runs under `node --test` (Node strips the types itself), not
+  // through vite or this config — it imports node: builtins and a .ts path,
+  // neither of which belong to the browser build.
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts"]
+}

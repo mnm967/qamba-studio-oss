@@ -1,0 +1,4 @@
+{
+  "_stub": true,
+  "_comment": "Placeholder for hunyuan15_i2v — not a working graph. These families load their weights through their own nodes, so the graph has to be captured from a running ComfyUI (Browse Templates or the node's own example) and exported in API format over this file. A job resolving a placeholder is refused with a clear error rather than silently rendering nothing."
+}

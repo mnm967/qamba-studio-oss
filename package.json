@@ -1,0 +1,41 @@
+{
+  "name": "qamba-studio",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test director/*.test.mjs src/*/*.test.ts",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "node scripts/tauri_build.mjs",
+    "test:ui": "node scripts/ui-test.mjs",
+    "test:desktop": "cargo test --manifest-path src-tauri/Cargo.toml --lib",
+    "catalog": "python3 scripts/gen_model_catalog.py",
+    "models": "node scripts/gen_desktop_model_map.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.456.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.2",
+    "tunajs": "^1.1.3",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^4.3.3",
+    "playwright-core": "^1.62.1",
+    "typescript": "^7.0.2",
+    "vite": "^5.4.10"
+  },
+  "description": "Storyboard, generate and edit AI video on your own machine.",
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mnm967/qamba-studio.git"
+  }
+}

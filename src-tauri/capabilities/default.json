@@ -1,0 +1,47 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "What the Qamba Studio window is allowed to ask the Rust side for.",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    {
+      "identifier": "http:default",
+      "comment": "THE ALLOW-LIST IS THE SECURITY BOUNDARY FOR THIS BUILD. Left at the plugin's default, a node inside an imported ComfyUI workflow could name any URL and the app would fetch it. What is on the list is exactly what a local install needs: the user's own engine on loopback (8189 is the reserved slot for a second one), and the hosts a model download can legitimately come from. PROVIDER API CALLS ARE DELIBERATELY NOT HERE — those go through `secrets::byok_fetch`, which is Rust-side and carries its own per-provider host list, because that is the request that carries the key. Neither is a media host: this build's media is a file in the project's own folder, served by `mediaserver.rs` on loopback and reached by the webview directly.",
+      "allow": [
+        {
+          "url": "http://127.0.0.1:8188/*"
+        },
+        {
+          "url": "http://localhost:8188/*"
+        },
+        {
+          "url": "http://127.0.0.1:8189/*"
+        },
+        {
+          "url": "https://civitai.com/*"
+        },
+        {
+          "url": "https://*.civitai.com/*"
+        },
+        {
+          "url": "https://huggingface.co/*"
+        },
+        {
+          "url": "https://*.hf.co/*"
+        },
+        {
+          "url": "https://cdn-lfs.huggingface.co/*"
+        }
+      ],
+      "deny": [
+        {
+          "url": "http://127.0.0.1:8188/api/userdata/*"
+        }
+      ]
+    }
+  ]
+}
