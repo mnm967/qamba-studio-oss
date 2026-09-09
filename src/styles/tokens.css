@@ -1,11 +1,25 @@
 /* The two faces --font-ui / --font-mono name. This lives with the tokens that
-   reference it: legacy.css imports the same URL, but that file belongs to v1
-   and retiring it must not silently drop the v2 app to a system font. */
+   reference it, which is what kept the app off a system font when the v1
+   stylesheet that imported the same URL was retired. */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* Qamba Studio design tokens — the single palette source for v2 surfaces.
-   legacy.css re-declares the same values scoped to .app; both resolve
-   identically, so legacy and v2 screens can coexist during the migration. */
+/* THE GLOBAL BOX MODEL, and it lives here because this is the one stylesheet
+   every entry point imports (`main.tsx`).
+
+   It used to be line 2 of `legacy.css` — the v1 studio's — and the whole app
+   inherited it from there. Retiring that file took the reset with it, and the
+   half of the app OUTSIDE a `.ws` root lost it silently: `workspace.css`
+   scopes its own `box-sizing` to `.ws *` and to four `ws-*` modal roots, so a
+   surface that portals to `<body>` under its own class (the take-assembly
+   bench's `.tas-scrim` is one) fell back to `content-box`. Measured: a 132px
+   label rendered 132px wide and the 132px spacer meant to match it rendered
+   148px, putting the bench's playhead track 16px out of line with the strips
+   it is supposed to index. One rule, and every such surface is back on the
+   cascade it was written against. */
+*, *::before, *::after { box-sizing: border-box; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Qamba Studio design tokens — the single palette source for every surface. */
 :root {
   --bg: #07090e;
   --surface: #11151e;
