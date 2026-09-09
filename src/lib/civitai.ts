@@ -41,7 +41,7 @@
 import { hasRustHttp, httpFetch, isDesktop } from "./desktop.ts";
 
 const API = "https://civitai.com/api/v1";
-const UA = "QambaStudio/0.1 (+https://github.com/mnm967/qamba-studio)";
+const UA = "QambaStudio/0.1 (+https://github.com/mnm967/qamba-studio-oss)";
 
 /** Civitai's model types, restricted to the ones this hub offers. */
 export type CivitaiType = "Workflows" | "LORA" | "Checkpoint" | "Upscaler" | "VAE" | "Other";
