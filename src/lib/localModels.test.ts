@@ -536,25 +536,30 @@ const row = (over: Partial<ModelCatalogRow> = {}): ModelCatalogRow => ({
 const withMark = (mark: string, why: string, over: Partial<ModelCatalogRow> = {}) =>
   row({ capabilities: { desktop: mark, desktopWhy: why, desktopFix: "models" }, ...over });
 
-test("an OFFER is not a refusal — the row is still runnable elsewhere", () => {
-  // THE BUG THIS EXISTS FOR. An un-downloaded bundled row was blocked, so
-  // "download it in the engine window — 3 file(s) missing, starting with
-  // qwen_image_edit_2511_fp8mixed.safetensors" replaced the capability line on
-  // rows that run perfectly well on a key of your own, greyed out. `markFor`'s
-  // own contract already said an offer "stays on the tier it was already on".
+test("an OFFER IS a refusal here, because there is nowhere else to run it", () => {
+  // AND IT WAS NOT ONE IN THE CLOUD BUILD. There, an un-downloaded bundled row
+  // still rendered on the studio's pod, so blocking it put "download it in the
+  // engine window — 3 file(s) missing" over the capability line of rows that
+  // worked perfectly well. That pod is not part of this build: a row this
+  // machine has not downloaded runs NOWHERE, so the offer is the only sentence
+  // there is — and it names a fix the reader can perform, which is the whole
+  // point. Silence here is a picker letting you choose a model that cannot
+  // render, which is the failure this function exists to end.
   const m = withMark("offer", "download it in the engine window");
-  assert.equal(rowBlocked(m), null);
-  assert.equal(tierOf(m), "cloud", "an offer must not move the row either");
+  assert.equal(rowBlocked(m)?.why, "download it in the engine window");
+  assert.equal(rowBlocked(m)?.fix, "models");
+  // ...and it does not MOVE the row: the mark says what could be true after a
+  // download, not what is true now.
+  assert.equal(tierOf(m), "cloud");
 });
 
-test("…but where the row is unusable anyway, the offer is the better sentence", () => {
-  // A row nothing can call yet — no key on this machine — would otherwise say
-  // so and stop. The download names a fix the reader can actually perform, so
-  // where BOTH are true it is the one worth printing.
-  const keyless = withMark("offer", "download it in the engine window",
-                           { enabled: false, provider: "openai" });
-  assert.equal(rowBlocked(keyless)?.why, "download it in the engine window");
-  assert.equal(rowBlocked(keyless)?.fix, "models");
+test("…and a row with no key of your own says that instead", () => {
+  // Two different absences with two different fixes. `blocked` and `offer`
+  // are about WEIGHTS; this one is about a credential, and it is a button onto
+  // the keys screen rather than a sentence.
+  const keyless = row({ enabled: false, provider: "openai" });
+  assert.match(rowBlocked(keyless).why, /openai key/);
+  assert.equal(rowBlocked(keyless).fix, "keys");
 });
 
 test("BLOCKED refuses wherever the row sits — the machine owns it and cannot run it", () => {

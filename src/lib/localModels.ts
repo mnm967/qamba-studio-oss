@@ -195,22 +195,27 @@ export function rowBlocked(m: ModelCatalogRow): RowBlock | null {
   if (desk?.desktop === "blocked" && desk.desktopWhy) {
     return { why: desk.desktopWhy, fix: desk.desktopFix };
   }
-  // AN OFFER IS NOT A REFUSAL, and treating it as one is what put "download it
-  // in the engine window — 3 file(s) missing" on studio-cloud rows the studio
-  // renders perfectly well, greyed out, in place of their own capability line.
-  // `markFor`'s own contract already says an offer "stays on the tier it was
-  // already on, so an admin who wants the pod keeps the pod"; this branch
-  // contradicted it. So an offer only ever speaks where the row would be
-  // unusable ANYWAY — and there it is the better sentence, because it names a
-  // fix the reader can perform where "coming soon" names none.
-  const offer = desk?.desktop === "offer" && desk.desktopWhy
-    ? { why: desk.desktopWhy, fix: desk.desktopFix } : null;
+  // AN OFFER IS A REFUSAL HERE, AND IT WAS NOT IN THE CLOUD BUILD — the
+  // difference is that there was somewhere else for the row to run.
+  //
+  // There, an un-downloaded bundled row still rendered on the studio's pod, so
+  // treating the offer as a refusal put "download it in the engine window — 3
+  // file(s) missing" over the capability line of rows that worked perfectly
+  // well, greyed out. That pod is not part of this build: a row this machine
+  // has not downloaded runs NOWHERE, so the offer is the only sentence there
+  // is — and it is the good kind, naming a fix the reader can perform.
+  //
+  // It is still checked AFTER `blocked`, because "the weights are here and the
+  // engine is asleep" has a different fix from "the weights are not here".
+  if (desk?.desktop === "offer" && desk.desktopWhy) {
+    return { why: desk.desktopWhy, fix: desk.desktopFix };
+  }
   // A HOSTED ROW WITH NO KEY ON THIS MACHINE. `byokRows` re-enables one the
   // moment its provider's key is in the keychain, so `enabled: false` here
   // means exactly "nothing can call this yet" — and the fix is one screen away,
   // which is why it is a button rather than a sentence.
   if (!m.enabled) {
-    return offer ?? {
+    return {
       why: (m.capabilities?.blocked as string)
         ?? `no ${m.provider} key on this machine — add one under API keys`,
       fix: m.provider ? "keys" : undefined,
