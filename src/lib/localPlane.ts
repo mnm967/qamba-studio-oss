@@ -109,7 +109,7 @@ let keyIndex: Map<string, string> | null = null;
  * NOT the signed-in account, deliberately. A local project has to keep working
  * when nobody is signed in — that is most of the point — and it must not
  * change hands because a second person signed into this copy of the app. It is
- * one stable id per install, and `cloudSync` strips it on the way up so the
+ * one stable id per install — the cloud build stripped it on the way up so the
  * database's own trigger derives the real owner.
  */
 export function localOwnerId(): string {

@@ -33,6 +33,7 @@ const CastWorldRefsDemo = React.lazy(() => import("../components/modals/CastWorl
 const WizardModelsDemo = React.lazy(() => import("../components/modals/WizardModelsDemo"));
 const NestedEntryDemo = React.lazy(() => import("../components/modals/NestedEntryDemo"));
 const BibleVoiceDemo = React.lazy(() => import("../components/modals/BibleVoiceDemo"));
+const LocalPlaneDemo = React.lazy(() => import("../components/modals/LocalPlaneDemo"));
 const QueuePopover = React.lazy(() => import("../components/shell/QueuePopover"));
 const WorkflowRepairPanel = React.lazy(() => import("../components/shell/WorkflowRepairPanel"));
 const DirectorChromeDemo = React.lazy(() => import("../components/shell/DirectorChromeDemo"));
@@ -122,6 +123,12 @@ const SCREENS: Record<string, () => React.ReactElement> = {
   // which templates are in use. Reads Supabase for imported graphs, which
   // comes back empty without a session, exactly as the queue popover does.
   workflows: () => <WorkflowsBody />,
+  // The local storage plane. Here for the reason `compat` is — its subject is
+  // the MACHINE — plus one of its own: the claim being made is that a project
+  // on this computer behaves like any other through the SAME routed client,
+  // and "the query landed on the local store" is only observable by making one
+  // and reading it back. It signs nothing in and reaches no network.
+  local: () => <LocalPlaneDemo />,
   // The director panel's chrome, at its design width. Not a desktop screen —
   // here for the same reason `replan` and `panel` are, plus one of its own:
   // the handoff it implements calls its colours, type sizes, spacing, radii

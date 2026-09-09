@@ -21,7 +21,7 @@
 // Supabase table would be per-account (so it would be wrong the moment two
 // people share a login, and empty when signed out), would not exist for a
 // local-plane project, and would go stale the moment someone deleted the file
-// by hand. Same reasoning as `autoSync`'s `syncedAt` marker: a fact about this
+// by hand. Same reasoning as any per-machine marker: a fact about this
 // install belongs to this install.
 //
 // EXISTENCE IS ALWAYS THE DISK, NEVER THIS FILE. Every read intersects the

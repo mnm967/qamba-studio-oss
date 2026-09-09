@@ -17,7 +17,7 @@
 //    does exist — and the two timelines are then wired into each other:
 //    trimming a clip in the copy drags its "partner" around in the original,
 //    a lane in the copy ducks under a lane in a cut nobody has open. That is
-//    the same self-FK trap `cloudSync.writeOrder` documents, and it is why
+//    the same self-FK trap a whole-project copy runs into, and it is why
 //    both are held back to a second pass (see `duplicateTimeline`) rather
 //    than ridden along with the insert.
 import type { Clip, Track } from "./db/types";
@@ -140,7 +140,8 @@ const LAST_KEY = "qamba.timeline.last";
 /**
  * The open cut, per episode, per MACHINE.
  *
- * localStorage rather than a column, for `autoSync`'s reason one table over:
+ * localStorage rather than a column, for the reason a sync marker is kept
+ * there rather than on the row:
  * it describes what this browser is looking at, two people editing one
  * episode can reasonably differ, and writing it to the row would mark the
  * timeline changed — which on the local plane is an edit the sync would then

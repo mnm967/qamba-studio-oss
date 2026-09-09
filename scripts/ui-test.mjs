@@ -467,7 +467,11 @@ async function run() {
         [...document.querySelectorAll("button")]
           .filter((b) => /Get/.test(b.textContent || "")).filter((b) => b.disabled)
           .map((b) => (b.closest("div")?.parentElement?.textContent || ""))
-          .filter((t) => !/out of reach|may swap|needs ~/.test(t)).length);
+          .filter((t) => !/out of reach|may swap|needs ~|may not fit/.test(t)).length);
+      // "may not fit" is the ESTIMATED footprint's wording — a rung whose
+      // requirement was derived from the file rather than measured. It is
+      // still a memory refusal, and leaving it out of this list reported nine
+      // correct rows as refused for the wrong reason.
       check("every remaining refusal is about memory", otherReasons === 0, `${otherReasons} others`);
       await shot(page, "08-engine-linked-comfy");
 
@@ -573,22 +577,18 @@ async function run() {
       // WHICH CARDS GET A SHARE TICK IS THE SECURITY-RELEVANT ONE. Sharing
       // writes an encrypted copy off this machine, and only the providers the
       // POD's pipelines can actually spend should offer it — fal's key drives
-      // generation, and an episode's blocks render on H3, so a tick there
-      // would move a key for a pipeline that never reads it.
-      // The label says "the studio's cloud" now, not "the render pod" — that
-      // vocabulary is admin-only. Matching the old string found NOTHING, which
-      // failed the first check and let the second PASS VACUOUSLY: "no card
-      // offers it to fal" is trivially true of an empty list, so the
-      // security-relevant half was asserting nothing at all.
+      // NO KEY IS EVER SHARED ANYWHERE. The cloud build had a tick per card
+      // that copied a key into a server-side vault so its render pod could
+      // spend it; there is no pod and no vault here, `secrets.rs` has no
+      // `byok_share`, and a key never leaves this machine's keychain except as
+      // a header on a request to the provider it belongs to. Asserted as an
+      // ABSENCE, because the alternative to a working tick is not a missing
+      // tick — it is a tick that appears to work.
       const shareCards = await page.$$eval(".ws-card", (cards) => cards
-        .filter((c) => /use this key/.test(c.textContent ?? ""))
+        .filter((c) => /use this key|share this key/i.test(c.textContent ?? ""))
         .map((c) => (c.textContent ?? "").slice(0, 12).trim()));
-      check("a share tick is found at all",
-        shareCards.length > 0, JSON.stringify(shareCards));
-      check("the cloud-sharing tick is offered on the planner-capable key",
-        shareCards.some((c) => /OpenAI/.test(c)), JSON.stringify(shareCards));
-      check("…and NOT on the generation-only one",
-        !shareCards.some((c) => /fal/.test(c)), JSON.stringify(shareCards));
+      check("no card offers to share a key with anything",
+        shareCards.length === 0, JSON.stringify(shareCards));
 
       // A REJECTED KEY IS A THIRD STATE. "Stored" and "working" are different
       // facts, and a rotated key is stored and dead — the copy has to say the
@@ -605,211 +605,77 @@ async function run() {
         /rejected the key/.test(k) && /Incorrect API key/.test(k),
         k.match(/[^\n]*rejected[^\n]*/)?.[0] ?? "no refusal shown");
       await shot(page, "14-byok-rejected");
-
-      // The index says a key exists and the keychain does not — what deleting
-      // it in Keychain Access leaves behind. Reported, never silently cleared.
-      await open(page, "engine",
-        "desktop=m3air&engine=installed&byok=anthropic&byokorphan=anthropic&admin=1");
-      await openTab(page, "API keys");
-      k = await modal.innerText();
-      check("a key gone from the keychain is named, not quietly forgotten",
-        /gone from the keychain/.test(k) && /Keychain Access/.test(k));
     }
 
-    // WHAT A BETA USER SEES, which is a different surface and not a greyed
-    // version of the one above. Three providers are held back because nothing
-    // behind them has ever answered a live request — a card that spends the
-    // user's own card on that is the thing being held. Asserted as ABSENCE
-    // AND presence, because "the card is gone" is trivially true of a tab that
-    // failed to render.
-    console.log("\n▸ api keys · the open beta's hold");
-    {
-      await open(page, "engine", "desktop=m3air&engine=installed");
-      await openTab(page, "API keys");
-      let k = await modal.innerText();
-      check("a member is offered the chat, image and voice keys",
-        /OpenAI/.test(k) && /Anthropic/.test(k) && /Google Gemini/.test(k)
-        && /ElevenLabs/.test(k) && /Fish Audio/.test(k));
-      check("…and not the three video-generation ones",
-        !/fal\.ai/.test(k) && !/MiniMax/.test(k) && !/Alibaba/.test(k),
-        k.replace(/\s+/g, " ").slice(0, 200));
-      check("with no fal card there is no fal model form either",
-        !/Add a fal model/.test(k));
-      await shot(page, "12b-byok-member");
-
-      // A KEY ALREADY IN THE KEYCHAIN IS NOT STRANDED. The card is the only
-      // place `removeKey` can be reached, so a held provider that HOLDS one
-      // keeps a removal-only card — no input, no Save, no Check, and none of
-      // its models in the list that claims to be what the pickers will show.
-      await open(page, "engine", "desktop=m3air&engine=installed&byok=openai,fal");
-      await openTab(page, "API keys");
-      k = await modal.innerText();
-      check("a held provider with a stored key keeps a way to remove it",
-        /fal\.ai/.test(k) && /not in this beta/.test(k) && /Remove this key/.test(k),
-        k.replace(/\s+/g, " ").slice(0, 200));
-      const picker = k.split("In your pickers")[1] ?? "";
-      check("…and none of its models are listed as being in the pickers",
-        /GPT Image 2/.test(picker) && !/Seedream/.test(picker),
-        `list was: ${picker.replace(/\s+/g, " ").slice(0, 160)}`);
-      check("a held card offers no way to spend the key",
-        !/Add a fal model/.test(k));
-      await shot(page, "12c-byok-member-stored");
-    }
+    // THE OPEN BETA'S PROVIDER HOLD IS NOT PART OF THIS BUILD. The cloud
+    // version withheld three providers and every hosted-video row from a
+    // member's key list, because nothing behind them had ever answered a live
+    // request on the studio's own account. There are no members here and no
+    // studio account: a key is yours, it runs on your machine, and every
+    // provider the adapters can speak to is offered. Pinned as an absence
+    // where it matters — see the fal card above, which is listed and usable
+    // rather than held.
 
     console.log("\n▸ hardware recommendations");
+    // THE CLAIM LINE, NOT THE WHOLE MODAL. This block exists because step 1
+    // once promised a model the next screen did not have — so what it checks
+    // is that the model NAMED as runnable is one the installer offers, and
+    // that a model this machine cannot hold is never the one named.
+    //
+    // Reading the whole modal cannot say that any more. The screen explains
+    // what a machine CANNOT run and why (an M3 Air's refusal is its 16GB of
+    // system RAM, not its GPU, and saying so is the useful half), so the
+    // forbidden name legitimately appears in the sentence that rules it out.
+    // Matching against everything scored that explanation as a promise.
+    const claims = async () => {
+      const txt = await page.locator(".ws-modal").innerText();
+      const grab = (re) => (txt.match(re)?.[1] ?? "").trim();
+      return {
+        txt,
+        image: grab(/Best image model it can run:\s*([^\n]+)/),
+        video: grab(/Best video model it can run:\s*([^\n]+)/),
+      };
+    };
     for (const [machine, expect, forbid] of [
-      // the wizard must name models the INSTALLER offers — the mismatch this
-      // replaces had step 1 promising a model the next screen did not have
-      // each names a family AND the variant that fits — the wizard and the
-      // installer read the same catalogue, so these are the installer's words
+      // Each names a family AND the variant that fits, because the wizard and
+      // the installer read the same catalogue — so these are the installer's
+      // own words and a drift between the two screens fails here.
       ["rtx4090", /Krea 2 Turbo/, null],
       // Krea 2 was FORBIDDEN here while its only rung was 18GB — promising it
       // to a 12GB card was the mismatch this block exists to catch. It has an
       // 11GB Q3_K_M rung now, and a "12GB" card reports 11.99GB, so the studio
-      // default genuinely does fit and recommending it is correct. What still
-      // must not appear is a model with NO rung this card can hold.
-      ["rtx4070ti", /Krea 2 Turbo/, /MiniMax H3/],
-      ["m3air", /Stable Diffusion 1.5/, /MiniMax H3/],
-      ["headless", /No image model|Cloud mode|cloud/i, null],
+      // default genuinely does fit and recommending it is correct.
+      ["rtx4070ti", /Krea 2 Turbo/, null],
+      // 16GB of unified memory: an image model, and no H3 of any rung — the
+      // leanest build streams ~23GB through system RAM.
+      ["m3air", /Flux 2 Klein|Krea 2|Stable Diffusion/, /MiniMax H3/],
+      ["headless", /No image model|Cloud mode|cloud|nothing/i, null],
     ]) {
       await open(page, "firstrun", `desktop=${machine}&engine=absent`);
-      const txt = await page.locator(".ws-modal").innerText();
-      check(`${machine}: names a model the installer actually has`, expect.test(txt),
-        txt.replace(/\n/g, " ").slice(0, 150));
-      if (forbid) check(`${machine}: does not promise what will not fit`, !forbid.test(txt));
+      const c = await claims();
+      const named = `${c.image} ${c.video}`.trim();
+      check(`${machine}: names a model the installer actually has`,
+        expect.test(machine === "headless" ? c.txt : named),
+        named || c.txt.replace(/\n/g, " ").slice(0, 150));
+      if (forbid) {
+        check(`${machine}: does not promise what will not fit`,
+          !forbid.test(named), named);
+        // ...and the reason IS on screen, which is the other half: a machine
+        // told only "no" learns nothing about what would change the answer.
+        check(`${machine}: says why the big model is out`,
+          forbid.test(c.txt), c.txt.replace(/\n/g, " ").slice(0, 160));
+      }
       await shot(page, `07-machine-${machine}`);
     }
 
     // ── where a render runs ───────────────────────────────────────────
-    // OFFLINE and ahead of the network-dependent sections, for the reason
-    // stated at the sign-in one below.
-    //
-    // Every claim here needs a MACHINE to produce and none of them is this
-    // one: a member's account the studio's cloud is not open to, a laptop with
-    // no engine, a project whose rows are a file on disk. `placeFacts` states
-    // the machine instead, and what is being checked is that the picker SAYS
-    // so — a blocked plane is listed rather than dropped, its reason is on
-    // screen rather than in a tooltip, and Render refuses when there is
-    // nowhere for it to go.
-    console.log("\n▸ render settings · where it runs");
-    {
-      const card = page.locator(".ws-modal .rs-body");
-
-      await open(page, "render", "desktop=m3air&where=admin");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      let places = page.locator(".rs-place");
-      check("both planes are offered", await places.count() === 2,
-        await card.innerText().catch(() => ""));
-      check("an admin opens on the studio's cloud",
-        /Studio cloud/.test(await page.locator(".rs-place.on").innerText()),
-        await page.locator(".rs-place.on").innerText());
-      check("…with neither of them blocked", await page.locator(".rs-blocked").count() === 0);
-      check("…and Render enabled",
-        !(await page.locator("button.ws-render").isDisabled()));
-      await shot(page, "26-render-place-admin");
-
-      // The case the request was actually about.
-      await open(page, "render", "desktop=m3air&where=member");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      let t = await card.innerText();
-      check("a member still sees the studio's cloud listed", /Studio cloud/.test(t), t);
-      check("…marked coming soon, on screen rather than on hover",
-        /coming soon/.test(await page.locator(".rs-blocked").innerText()),
-        await page.locator(".rs-blocked").innerText());
-      check("…and lands on their own machine",
-        /this machine/i.test(await page.locator(".rs-place.on").innerText()),
-        await page.locator(".rs-place.on").innerText());
-      check("…with Render still available",
-        !(await page.locator("button.ws-render").isDisabled()));
-      await shot(page, "27-render-place-member");
-
-      // A reason with a fix is a BUTTON, not a sentence with nowhere to go.
-      await open(page, "render", "desktop=m3air&where=noengine");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      check("a missing engine names itself",
-        /Python is not installed/.test(await page.locator(".rs-blocked").innerText()),
-        await page.locator(".rs-blocked").innerText());
-      check("…and offers the window that fixes it",
-        await page.locator(".rs-fix").count() === 1);
-
-      // Both planes refused: the one state where Render itself has to stop.
-      await open(page, "render", "desktop=m3air&where=nowhere");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      check("with nowhere to run it, both reasons are shown",
-        await page.locator(".rs-blocked").count() === 2,
-        await card.innerText().catch(() => ""));
-      check("…and Render refuses rather than queueing a doomed job",
-        await page.locator("button.ws-render").isDisabled());
-      await shot(page, "28-render-place-nowhere");
-
-      // A local project's rows are a file on this computer, so the pod cannot
-      // see them — `enqueueJob` already refuses this and the picker agrees.
-      await open(page, "render", "desktop=m3air&where=localproj");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      t = await page.locator(".rs-blocked").innerText();
-      check("a local project cannot reach the cloud", /lives on this computer/.test(t), t);
-      check("…and is rendered here instead",
-        /this machine/i.test(await page.locator(".rs-place.on").innerText()));
-
-      // WHAT THE CHAIN NEEDS. A pass whose checkpoint is not downloaded fails
-      // AFTER the passes ahead of it have spent their GPU time, so the picker
-      // refuses the plane and names what to fetch.
-      await open(page, "render", "desktop=m3air&where=nomodels&admin=1&post=upscale,ltx_refine,grain");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      t = await page.locator(".rs-blocked").last().innerText();
-      check("a chain whose models are missing names the PASSES", /Upscale and Refine/.test(t), t);
-      check("…and itemises the models, with sizes",
-        await page.locator(".rs-needs > span").count() === 2,
-        await page.locator(".rs-needs").innerText().catch(() => ""));
-      check("…each marked as a download",
-        await page.locator('.rs-needs > span[data-fix]').count() === 2);
-      check("…behind one Download button",
-        /Download/.test(await page.locator(".rs-fix").innerText()));
-      check("…with this machine refused",
-        await page.locator(".rs-place", { hasText: "this machine" }).isDisabled());
-      // An admin still has somewhere to render, so the button stays live.
-      check("…and the cloud still available",
-        !(await page.locator("button.ws-render").isDisabled()));
-      await shot(page, "29-render-place-models");
-
-      // A NODE PACK IS NOT A DOWNLOAD. `install_engine` adds five packs and
-      // Impact / KJNodes / H3-FaceRefine are not among them, so a Download
-      // button here would be a dead click.
-      await open(page, "render",
-                 "desktop=m3air&where=nonodes&admin=1&post=upscale,h3_facefix,color_match,grain");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      t = await page.locator(".rs-blocked").last().innerText();
-      check("a missing node pack says the pass cannot run here",
-        /cannot run on this machine/.test(t), t);
-      check("…and offers no download button", await page.locator(".rs-fix").count() === 0);
-      check("…and no line pretends to be one",
-        await page.locator('.rs-needs > span[data-fix]').count() === 0);
-      check("…while the pass whose weights ARE there is not blamed",
-        !/Upscale/.test(t), t);
-      await shot(page, "30-render-place-nodes");
-
-      // TWO PASSES WANTING ONE DOWNLOAD LIST IT ONCE. Both face passes name
-      // `bbox/face_yolov8m.pt`, and naming it twice reads as a bug in the list
-      // rather than as two passes agreeing.
-      await open(page, "render",
-                 "desktop=m3air&where=nomodels&admin=1&post=facefix,h3_facefix,grain");
-      await page.waitForSelector(".rs-place", { timeout: 5000 });
-      const lines = await page.locator(".rs-needs > span").allInnerTexts();
-      const det = lines.filter((l) => /Face detector/.test(l));
-      check("a download two passes share is listed once", det.length === 1,
-        lines.join(" / "));
-      check("…while their node gaps stay separate",
-        lines.filter((l) => /ComfyUI nodes/.test(l)).length === 2, lines.join(" / "));
-
-      // THE WEB BUILD SHOWS NO CARD AT ALL. The local plane has no rows there,
-      // and a permanently refused option on every render forever is the
-      // control-that-cannot-reach-the-render this modal's own header warns
-      // about.
-      await open(page, "render", "desktop=m3air&where=web");
-      check("the web build offers no place picker",
-        await page.locator(".rs-place").count() === 0);
-      check("…and can still render", !(await page.locator("button.ws-render").isDisabled()));
-    }
+    // THERE IS ONE PLACE AND IT IS THIS MACHINE, so the picker the cloud
+    // build put in the render modal — studio cloud or here — has nothing to
+    // choose between and is gone rather than shown with one option ticked.
+    // `enqueueJob` and `sb.insert` are what make that true of every job; the
+    // modal simply has no card. Nothing to check on screen: an absent control
+    // is asserted by the page-health pass at the bottom, which opens this
+    // modal and fails on a console error.
 
     // ── the wizard's sheets bar ───────────────────────────────────────
     // OFFLINE, so it sits with the other offline sections and ahead of the
@@ -1745,9 +1611,10 @@ async function run() {
       /in use on this machine/.test(onDesktop), onDesktop.replace(/\n/g, " | "));
     const deskCount = Number((onDesktop.match(/· (\d+) in use/) ?? [])[1]);
 
-    // The desktop tier is THIN — four templates against the pod's twelve — and
-    // a count with no reason reads as a studio with nothing in it. The map
-    // records why it dropped each entry; the page's job is to show it.
+    // The desktop map is the full one MINUS every entry whose weights the
+    // engine window cannot fetch, and a shorter list with no reason reads as
+    // a studio with nothing in it. The map records why it dropped each
+    // entry; the page's job is to show it.
     const report = await page.locator(".ws-card").first().innerText();
     check("a generated map explains itself",
       /This map is generated/.test(report) && /entries dropped/.test(report), report.slice(0, 120));
@@ -1897,25 +1764,40 @@ async function run() {
     const dormantOpen = await page.locator("aside").innerText();
     // Three different reasons, and every row says which one it is.
     check("…each row saying why it is dormant",
-      /nothing references it/.test(dormantOpen) && /renders on the studio cloud/.test(dormantOpen)
+      /nothing references it/.test(dormantOpen)
+        && /renders on a machine with every weight/.test(dormantOpen)
         && /ported into wan22-5b/.test(dormantOpen), dormantOpen.slice(0, 200));
 
-    await page.locator(".ws-seg button", { hasText: "Cloud" }).first().click();
+    // THE OTHER TIER IS THE FULL MAP, not another machine. It is the source
+    // the desktop map is generated from, so it answers "why is X not on the
+    // list" — and a template dormant HERE because the full map is the only
+    // thing that names it is a different fact from one nothing names at all.
+    await page.locator(".ws-seg button", { hasText: "Full map" }).first().click();
     await page.waitForTimeout(250);
-    const onPod = await wfHead();
-    const podCount = Number((onPod.match(/· (\d+) in use/) ?? [])[1]);
+    const onFull = await wfHead();
+    const fullCount = Number((onFull.match(/· (\d+) in use/) ?? [])[1]);
+    // THE MACHINE IS WHAT CHANGES, not the template count. The desktop map
+    // drops ENTRIES — a row whose weights the engine window cannot fetch — and
+    // the templates those entries used are reached by surviving rows anyway,
+    // so both tiers legitimately name the same files. Asserting a bigger
+    // number here was asserting a property neither map has.
     check("switching tier changes the machine AND the answer",
-      /in use on the studio cloud/.test(onPod) && podCount > deskCount,
-      `desktop ${deskCount} → cloud ${podCount}`);
-    const podBody = await page.locator("body").innerText();
+      /in use on a machine with every weight/.test(onFull)
+        && fullCount === deskCount, `desktop ${deskCount} → full ${fullCount}`);
+    // ...and the full map says outright that a graph cannot be EDITED there,
+    // which is the difference that matters on this screen: it describes what
+    // the pipeline can resolve given every weight, not what this machine runs.
+    check("…and says the other tier is a reference rather than a place to work",
+      /reference only/.test(onFull), onFull.replace(/\n/g, " | "));
+    const fullBody = await page.locator("body").innerText();
     check("the hand-written map has no generated banner",
-      !/This map is generated/.test(podBody));
-    // `graphs.py`'s image builders are reachable only where image_gen runs on
-    // Python, which is the pod — so they belong to this tier and the local
-    // recipes to the other one. Showing both everywhere would claim a renderer
-    // that does not run there.
-    check("the pod tier lists the python image builders, not the local recipes",
-      /IMAGE FAMILIES/.test(podBody) && !/LOCAL RECIPES/.test(podBody));
+      !/This map is generated/.test(fullBody));
+    // `graphs.py`'s image builders are reachable only where `image_gen` runs
+    // on Python, which the full map describes and the desktop one does not —
+    // so they belong to this tier and the local recipes to the other one.
+    // Showing both everywhere would claim a renderer that does not run there.
+    check("the full map lists the python image builders, not the local recipes",
+      /IMAGE FAMILIES/.test(fullBody) && !/LOCAL RECIPES/.test(fullBody));
 
     // ── the local storage plane
     //
@@ -2078,6 +1960,11 @@ async function run() {
     await shot(page, "39-speech-qwen-half");
 
     console.log("\n▸ local storage plane");
+    // WHAT ONLY A BROWSER CAN SHOW. The store, the query shim and the media
+    // paths are unit-tested; what they cannot say is that `supabase.from(...)`
+    // — the call every screen in this app makes — actually lands on the local
+    // store, that the rows survive a reload, and that a key with no file
+    // behind it resolves to nothing rather than to a broken image.
     await page.evaluate(() => sessionStorage.clear());
     await open(page, "local", "desktop=m3air");
     check("no local projects to begin with",
@@ -2087,83 +1974,56 @@ async function run() {
     await page.waitForFunction(
       () => /PROJECTS \(1\)/i.test(document.body.innerText), null, { timeout: 15000 });
     let lp = await page.locator("body").innerText();
-    // The plane's whole claim, in one line: the write went through the routed
-    // client and came back from the local store.
     check("beats written through supabase.from() read back from the local store",
-      /BEATS READ BACK THROUGH SUPABASE\.FROM\(\) \(3\)/i.test(lp), lp.slice(0, 200));
+      /beat 0 — written through supabase\.from\(\)/.test(lp), lp.slice(0, 200));
+    // `project_id` is DERIVED by the store's own trigger the way Postgres used
+    // to derive it — half the app's queries filter on it, and a null there is
+    // a row every one of them steps over.
     check("project_id is derived up the chain rather than passed",
-      /project_id derived: true/.test(lp), lp.slice(-300));
+      /project_id derived: true/.test(lp), lp.match(/project_id[^\n]*/)?.[0] ?? "");
     check("the project is tagged as living on this computer",
       (await page.getByTestId("tag-local").count()) === 1);
-    // mediaUrl() has to answer for a key no bucket has ever seen.
-    const mediaSrc = await page.getByTestId("local-media").first().getAttribute("src");
+
+    // The media path with REAL BYTES: written through `uploadMedia`, which on
+    // this plane is a file in the project's folder, then resolved by the same
+    // `mediaUrl` the grid and the player use.
+    const shown = await page.getByTestId("local-media").first().getAttribute("src");
     check("local media resolves to a URL the page can load",
-      !!mediaSrc && !mediaSrc.includes("backblaze"), String(mediaSrc).slice(0, 40));
-    // A ROW WITH NO FILE resolves to the CDN, not to a local path that 404s.
-    // This is the interrupted-pull state — rows all present, media partly so —
-    // measured on a real project at 677 of 957 files, every one a black card.
-    const ghostSrc = await page.getByTestId("local-media-missing").first().getAttribute("src");
-    check("a registered key with no local file falls through to the CDN",
-      !!ghostSrc && /^https?:/.test(ghostSrc) && ghostSrc !== mediaSrc,
-      String(ghostSrc).slice(0, 60));
-    // 9 rows / 2 files since the demo added the ghost asset: the plan counts
-    // ROWS with a b2_key, and a registered-but-missing file is still a row the
-    // push would send (its media upload would then warn, exactly as the pull's
-    // "registered but not on disk" path does).
-    check("the push plan counts the rows it would send",
-      /9 rows across 6 tables · 2 files/.test(lp), lp.match(/\d+ rows across[^\n]*/)?.[0] ?? "none");
+      !!shown && !/^https?:/.test(shown), String(shown).slice(0, 60));
+    check("…and the bytes really landed on disk",
+      /[1-9]\d* bytes of media/.test(await page.getByTestId("local-bytes").innerText()),
+      await page.getByTestId("local-bytes").innerText());
+    // A ROW IS NOT A FILE, and there is no bucket to fall through to here — so
+    // a registered key with nothing behind it answers null and the surface
+    // renders nothing, rather than pointing an <img> at a host that does not
+    // exist.
+    const ghost = await page.getByTestId("local-media-missing").first().getAttribute("src");
+    check("a registered key with no local file resolves to nothing",
+      ghost === "" || ghost === null, String(ghost).slice(0, 60));
+    check("…and the demo says so in as many words",
+      /null \(correct\)/.test(lp), lp.match(/missing[^\n]*/)?.[0] ?? "");
     await shot(page, "20-local-plane");
 
-    // A project is a FILE, not React state: reloading must find it again.
-    // `admin=1` — the storage sheet's move/backup action is admin-only, and /ui/* has no session. The
-    // default stays the MEMBER view; see `harnessAdmin` for why.
-    await open(page, "local", "desktop=m3air&admin=1");
+    // A PROJECT IS A FILE, so a reload is the test: the rows come back off
+    // disk, and nothing is open until something opens it.
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.waitForSelector('[data-testid="make-local"]', { timeout: 20000 });
+    await page.waitForTimeout(600);
     lp = await page.locator("body").innerText();
     check("the project survives a reload", /PROJECTS \(1\)/i.test(lp), lp.slice(0, 160));
-    check("…and the plane starts on cloud until one is opened",
-      /plane: cloud/.test(await page.getByTestId("active-plane").innerText()));
-    await page.getByRole("button", { name: "Open" }).first().click();
+    check("…and no plane is open until one is opened",
+      /plane: none open/.test(await page.getByTestId("active-plane").innerText()),
+      await page.getByTestId("active-plane").innerText());
+    await page.locator('[data-testid="project-row"] button', { hasText: "Open" }).first().click();
     await page.waitForFunction(
-      () => /beat 2 — written through/.test(
-        document.querySelector('[data-testid="beat-list"]')?.textContent ?? ""),
-      null, { timeout: 10000 });
+      () => /beat 0/.test(document.body.innerText), null, { timeout: 10000 });
     check("opening it reads the rows back off disk",
-      /beat 2 — written through supabase\.from\(\)/.test(
-        await page.getByTestId("beat-list").innerText()));
+      /beat 0 — written through supabase\.from\(\)/.test(await page.locator("body").innerText()));
 
-    // The RAIL — the panel actually titled "Project settings" in the workspace.
-    // 1440x940 matters here: `.ws-panel` is `display: none` under 1240px, so a
-    // narrower harness would assert against a panel the app deliberately hides.
-    await page.getByTestId("open-rail").click();
-    await page.waitForSelector('[data-testid="settings-rail"] .ws-panel');
-    const rail = await page.locator('[data-testid="settings-rail"]').innerText();
-    check("the settings rail leads with where the project lives",
-      /STORAGE/i.test(rail) && /On this computer/.test(rail), rail.slice(0, 160));
-    // `.ws-mlabel` uppercases in CSS and `innerText` is the RENDERED text, so
-    // this compares case-insensitively — the same trap the engine section above
-    // documents. Asserting the source casing fails against a working screen.
-    const railLower = rail.toLowerCase();
-    check("…above the style and the models, because it decides what they can do",
-      railLower.indexOf("on this computer") < railLower.indexOf("image model"),
-      rail.slice(0, 200));
-    await shot(page, "23-local-settings-rail");
-    // The rail opens the sheet through the workspace store, like every modal.
-    await page.locator('[data-testid="settings-rail"] button', { hasText: "On this computer" }).click();
-    await page.waitForSelector(".ws-scrim .ws-modal");
-    check("the rail's storage row opens the same sheet",
-      /Project storage/.test(await page.locator(".ws-modal").innerText()));
-    await page.locator(".ws-modal .ws-icobtn").click();
-    await page.getByTestId("open-rail").click();
-    await page.waitForTimeout(300);
-
-    // The same control from PROJECT SETTINGS, which is where someone actually
-    // goes to ask about a project. It also proves something else for free:
-    // that whole modal is being served from the local store with no session,
-    // because its `projects` query is routed like every other one.
+    // WHERE THE PROJECT LIVES IS SAID WHERE SOMEBODY GOES TO ASK. There is one
+    // answer on this build, so it is a fact rather than a control — and the
+    // size is the part worth knowing, since nothing is backing it up.
     await page.getByTestId("open-settings").click();
-    // The frame now opens BEFORE its data (ModalShell's loading state), so
-    // "the modal is visible" no longer means "the modal is loaded" — wait for
-    // the content the checks below read.
     await page.waitForSelector(".ws-modal");
     await page.waitForFunction(
       () => /Storage/i.test(document.querySelector(".ws-modal")?.textContent ?? ""),
@@ -2171,217 +2031,15 @@ async function run() {
     const st = await page.locator(".ws-modal").innerText();
     check("project settings says where the project lives",
       /Storage/.test(st) && /On this computer/.test(st), st.slice(0, 160));
-    // The copy says "the studio's cloud", not "the pod" — that vocabulary is
-    // for admin-only surfaces now.
-    check("…and that the cloud cannot see it",
-      /cloud cannot see a project it does not hold/.test(st), st.slice(0, 200));
-    await page.getByRole("button", { name: /Move or back up/ }).click();
-    await page.waitForFunction(
-      () => document.querySelectorAll(".ws-scrim").length > 1, null, { timeout: 10000 });
-    // The containing-block trap: `.ns-l3` carries a backdrop-filter, so a
-    // fixed scrim rendered INSIDE project settings resolves against that
-    // panel's box and is clipped by its overflow.
-    const scrim = await page.evaluate(() => {
-      const s = [...document.querySelectorAll(".ws-scrim")].pop();
-      const r = s.getBoundingClientRect();
-      return { x: r.x, y: r.y, w: r.width, h: r.height,
-               iw: window.innerWidth, ih: window.innerHeight,
-               body: s.parentElement === document.body };
-    });
-    check("the storage modal opens over settings, not inside it",
-      scrim.body && scrim.x === 0 && scrim.y === 0
-      && scrim.w === scrim.iw && scrim.h === scrim.ih, JSON.stringify(scrim));
+    check("…and that nothing is backing it up",
+      /nothing is backing it up/.test(st), st.slice(0, 240));
+    check("…and how much is on disk, which is what a copy would cost",
+      /of media on disk/.test(st), st.match(/[^\n]*on disk[^\n]*/)?.[0] ?? "");
     await shot(page, "22-local-settings-storage");
-    await page.keyboard.press("Escape");
     await page.evaluate(() => {
-      // Both modals: the harness has no workspace store driving settings.
       for (const s of document.querySelectorAll(".ws-scrim")) s.dispatchEvent(
         new MouseEvent("click", { bubbles: true }));
     });
-    await page.waitForTimeout(500);
-
-    // A TRANSFER OUTLIVES THE MODAL. This is the bug as it was reported: start
-    // a copy, close the sheet, come back — and find a fresh plan and a button
-    // offering to start the whole thing again, with 957 files still moving
-    // behind it. The transfer here is a stand-in (a real one needs a session
-    // and a bucket); what is under test is the registry, the adoption, and the
-    // two controls.
-    await page.getByTestId("fake-transfer").click();
-    await page.getByTestId("open-storage").click();
-    await page.waitForSelector('[data-testid="transfer-progress"]');
-    const p1 = await page.getByTestId("transfer-progress").innerText();
-    check("a running transfer shows its progress", /\d+\/200/.test(p1), p1);
-    check("…and offers Pause and Stop",
-      (await page.getByTestId("transfer-pause").count()) === 1
-      && (await page.getByTestId("transfer-stop").count()) === 1);
-
-    await page.locator(".ws-modal .ws-icobtn").click();
-    await page.waitForSelector(".ws-modal", { state: "detached" });
-    await page.waitForTimeout(1200);
-    await page.getByTestId("open-storage").click();
-    await page.waitForSelector('[data-testid="transfer-progress"]');
-    const p2 = await page.getByTestId("transfer-progress").innerText();
-    check("closing the sheet does not lose it — reopening adopts it, still moving",
-      p1 !== p2, `${p1} -> ${p2}`);
-    await shot(page, "24-local-transfer");
-
-    await page.getByTestId("transfer-pause").click();
-    await page.waitForTimeout(700);
-    const h1 = await page.getByTestId("transfer-progress").innerText();
-    await page.waitForTimeout(900);
-    check("pause actually holds it between files",
-      h1 === (await page.getByTestId("transfer-progress").innerText()), h1);
-    check("…and says so", /paused/i.test(await page.locator(".ws-modal .ws-card").first().innerText()));
-
-    await page.getByTestId("transfer-pause").click();      // resume
-    await page.waitForTimeout(600);
-    await page.getByTestId("transfer-stop").click();
-    await page.waitForSelector('[data-testid="transfer-outcome"]');
-    const out = await page.getByTestId("transfer-outcome").innerText();
-    // A stop the user asked for is not a failure, and what it left behind is
-    // the thing they need to know.
-    check("stop ends it and says where it got to",
-      /Stopped at \d+ of 200/.test(out) && /Nothing was deleted/.test(out), out);
-    check("…and the action is offered again", (await page.getByTestId("transfer-go").count()) === 1);
-    await page.locator(".ws-modal .ws-icobtn").click();
-    await page.waitForTimeout(300);
-
-    // Visible from OUTSIDE the sheet, the same rule weight downloads follow.
-    await page.getByTestId("fake-transfer").click();
-    await page.getByTestId("open-queue").click();
-    await page.waitForSelector(".ws-queuepop");
-    const qp = await page.locator(".ws-queuepop").innerText();
-    check("the queue popover carries the transfer too",
-      /MOVING A PROJECT/i.test(qp) && /\d+\/200/.test(qp), qp.slice(0, 200));
-    check("…and counts it in the header without calling it a job",
-      /1 transferring/.test(qp), qp.slice(0, 120));
-    await shot(page, "25-local-transfer-queue");
-    await page.evaluate(() => {
-      document.querySelector('[data-testid="transfer-row"] button:last-of-type')?.click();
-    });
-    await page.waitForTimeout(500);
-    check("…and can be stopped from there",
-      !/MOVING A PROJECT/i.test(await page.locator(".ws-queuepop").innerText()));
-    // Closed through the DOM: the popover is fixed and now tall enough to sit
-    // over the button that opened it, so a real click is intercepted by it.
-    await page.evaluate(() => {
-      document.querySelector('[data-testid="open-queue"]')?.click();
-    });
-    await page.waitForTimeout(300);
-
-    // The destructive half. Signed out, a push must refuse with a sentence a
-    // person can act on — and must not delete anything on the way.
-    await page.getByTestId("open-storage").click();
-    await page.waitForSelector(".ws-modal");
-    let sm = await page.locator(".ws-modal").innerText();
-    // THREE STATES, NOT TWO. A project pulled from the studio still has its
-    // cloud copy, so "nothing is backing it up" was false for exactly the
-    // project most likely to be looked at — and "Back up to the cloud" named a
-    // backup that already existed. Signed out (which the harness is), the
-    // honest answer is that it does not know, and it must not round that to
-    // the alarming one.
-    check("it does not claim there is no backup when it could not ask",
-      !/nothing else is backing it up/.test(await page.locator(".ws-modal p").first().innerText()),
-      await page.locator(".ws-modal p").first().innerText());
-    check("…and says so, with what pressing the button would do",
-      /whether the studio already holds a copy is unknown/.test(
-        await page.getByTestId("stance-note").innerText()));
-    check("…and never makes a second project either way",
-      /writes over the same project rather than making a second one/.test(
-        await page.getByTestId("stance-note").innerText()));
-
-    check("the modal has its plan on the FIRST paint, not after an effect",
-      /rows/.test(sm), sm.slice(0, 80));
-    // COUNTS, not the exact arithmetic: the sheet is built from whatever the
-    // demo just created, and pinning "8 rows / 1 files" pins the FIXTURE
-    // rather than the claim — which is that the plan is on screen before
-    // anything is sent, so a push is approved knowing its size.
-    check("the storage modal states the plan before doing anything",
-      /\d+\s*rows/.test(sm) && /\d+\s*files/.test(sm), sm.slice(0, 200));
-    check("…and keeping the local copy is the default",
-      await page.locator(".ws-modal input[type=checkbox]").isChecked());
-    await page.locator(".ws-modal input[type=checkbox]").uncheck();
-    check("unchecking it renames the action to a move",
-      /Move to the cloud/.test(await page.locator(".ws-modal").innerText()));
-    await page.getByRole("button", { name: /Move to the cloud/ }).click();
-    await page.waitForFunction(
-      () => /Sign in to the studio/.test(document.querySelector(".ws-modal")?.textContent ?? ""),
-      null, { timeout: 10000 });
-    sm = await page.locator(".ws-modal").innerText();
-    check("a signed-out push refuses with something actionable",
-      /Sign in to the studio first/.test(sm), sm.slice(-160));
-    await shot(page, "21-local-storage-modal");
-    await page.locator(".ws-modal .ws-icobtn").click();
-    check("…and the project is still on this computer",
-      /PROJECTS \(1\)/i.test(await page.locator("body").innerText()),
-      "a failed MOVE must never be the thing that deletes the source");
-
-    // The block above may or may not have left the sheet open, depending on
-    // which branch it took — close it only if it is there.
-    if (await page.locator(".ws-modal").count()) {
-      await page.locator(".ws-modal .ws-icobtn").click();
-      await page.waitForTimeout(200);
-    }
-
-    // THE THIRD STATE, and the one auto-sync exists for: this project is on
-    // this machine AND in the studio. Reached here through a dev-only primer,
-    // because a signed-out harness cannot otherwise see the state that a
-    // pulled project is permanently in.
-    await page.getByTestId("prime-cloud").click();
-    await page.getByTestId("open-storage").click();
-    await page.waitForSelector(".ws-modal");
-    let both = await page.locator(".ws-modal").innerText();
-    check("a project that is ALSO in the cloud says so",
-      /on this computer AND in the studio cloud/.test(both), both.slice(0, 200));
-    check("…and stops calling it a backup that needs making",
-      /Update the cloud copy/.test(both) && !/nothing else is backing it up/.test(both));
-    check("…and names when the cloud copy was last written",
-      /last written 3 hours ago/.test(both), both.slice(0, 260));
-    check("auto-sync is offered, and on", await page.getByTestId("auto-sync").isChecked());
-    check("…and says it sends only what changed, one way",
-      /only what changed, never the whole project/.test(both)
-      && /this computer's copy is the one the app reads/i.test(both));
-    await shot(page, "26-local-both-autosync");
-
-    // An ordinary edit through the routed client is what the loop watches for.
-    const countOf = (text) => Number(/(\d+) changes? waiting/.exec(text)?.[1] ?? 0);
-    const before = countOf(await page.getByTestId("auto-state").innerText());
-    await page.locator(".ws-modal .ws-icobtn").click();
-    await page.getByTestId("edit-beat").click();
-    await page.waitForTimeout(600);
-    await page.getByTestId("open-storage").click();
-    await page.waitForSelector('[data-testid="auto-state"]');
-    const after = await page.getByTestId("auto-state").innerText();
-    // NOT a delta: this project has never synced, so its rows are all pending
-    // already and editing one of them cannot raise the count — which is the
-    // ledger being right rather than wrong. What is checked here is that an
-    // ordinary edit through the routed client reaches the loop at all; the
-    // ledger's exactness is pinned in pendingLedger.test.ts.
-    check("an edit reaches the loop, which says the changes are going up",
-      countOf(after) >= Math.max(1, before) && /going up shortly/.test(after),
-      `${before} -> ${after}`);
-
-    // Turning it off must actually stop it, not just change a label.
-    await page.getByTestId("auto-sync").uncheck();
-    await page.waitForTimeout(200);
-    check("switching it off says the cloud copy will now wait for the button",
-      /stays as it is until you press the button/.test(
-        await page.getByTestId("auto-state").innerText()));
-    await page.locator(".ws-modal .ws-icobtn").click();
-    await page.waitForTimeout(200);
-
-    // CLEAN UP AFTER ITSELF. A local project is a FILE (a sessionStorage entry
-    // under the mock), so unlike every other screen in this suite it survives
-    // the run — and the next one then boots with a project, an auto-sync loop
-    // and a network probe running behind whatever it is testing. Measured: a
-    // second run in the same tab failed all five workflow-repair checks that
-    // way, on code neither run had touched.
-    await page.evaluate(() => sessionStorage.clear());
-    await page.evaluate(() => {
-      localStorage.removeItem("qamba.local.autosync");
-      localStorage.removeItem("qamba.local.synced");
-    });
-
 
     // ── the queued-row prompt panel
     //
