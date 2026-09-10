@@ -168,15 +168,6 @@ useful.
 
 ---
 
-## What this build is not
-
-This is the local half of a studio that also had a cloud half, and the cloud
-half is not here — not disabled, not behind a flag, removed. No accounts, no
-shared render pod, no cloud backup or sync, no project sharing,
-no automatic QA reviewer.
-
----
-
 ## Licence
 
 **AGPL-3.0-or-later** — see [LICENSE](LICENSE).
