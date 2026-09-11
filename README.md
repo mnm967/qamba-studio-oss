@@ -168,21 +168,6 @@ useful.
 
 ---
 
-## What this build is not
-
-This is the local half of a studio that also had a cloud half, and the cloud
-half is not here — not disabled, not behind a flag, removed. No accounts, no
-shared render pod, no cloud backup or sync, no project sharing, no paid tier,
-no automatic QA reviewer.
-
-You will still find the occasional comment that measures something "on the
-pod". Those are provenance: a number was measured somewhere, and where it was
-measured is part of whether you should believe it. The code is local-only — a
-comment recording where a figure came from is not a feature quietly still
-running.
-
----
-
 ## Licence
 
 **AGPL-3.0-or-later** — see [LICENSE](LICENSE).
