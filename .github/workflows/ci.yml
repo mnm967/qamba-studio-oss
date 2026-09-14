@@ -13,6 +13,11 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+# Two pushes in quick succession used to run two full gates; only the newer
+# one can still be true of the branch.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   gate:
     runs-on: ubuntu-latest
