@@ -195,3 +195,9 @@ Issues and pull requests are welcome. Two things worth knowing before a PR:
 - **Run the tests, and add the one that would have caught you.** The most
   useful tests here pin a rule that two implementations have to agree on —
   which is where this project's bugs have historically lived.
+- **CI runs on every pull request** — `tsc`, the JS/TS suite, a production
+  build and the pipeline's pytest, on Linux. It deliberately does not run
+  `npm run test:ui` (it reaches the network and is flaky on a runner) or the
+  Rust suite (it wants a toolchain and system libraries, and half of what it
+  covers is macOS behaviour), so run those two locally before a PR that
+  touches the timeline, the desktop shell or the engine window.
