@@ -436,3 +436,16 @@ def test_a_designed_clip_records_the_transcript_a_CLONE_will_need(breeze):
         assert ds._ref_text("a1") == meta["speech_text"]
     finally:
         ds.sb.asset_by_id = saved
+
+
+def test_explicit_strict_elevenlabs_never_falls_back(rec, monkeypatch):
+    monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
+    with pytest.raises(ValueError, match="fallback is disabled"):
+        T.handle_tts({"id": "strict", "payload": {"provider": "elevenlabs", "strict_provider": True, "el_voice_id": "voice", "text": "Hello"}})
+    assert not rec["openai"]
+
+
+def test_strict_provider_rejects_unknown_engine(rec):
+    with pytest.raises(ValueError, match="provider is unavailable"):
+        T.handle_tts({"id": "strict", "payload": {"provider": "typo", "strict_provider": True, "text": "Hello"}})
+    assert not rec["openai"]

@@ -1258,12 +1258,27 @@ def apply_chain(job, src, dst, ops, *, src_fps=24, params=None, tag="post",
 
 
 # ------------------------------------------------------- standalone jobs ----
+def _standalone_cap_h(payload):
+    """An explicit delivery height for standalone passes, like a timeline's.
+
+    Preserve the existing 1080 default when omitted. An upscale requested by
+    an external caller must not silently lose its extra pixels at the next hop.
+    """
+    value = payload.get("cap_h")
+    if value is None:
+        return None
+    if type(value) is not int or not 320 <= value <= 4320:
+        raise ValueError("cap_h must be an integer between 320 and 4320")
+    return value
+
+
 def handle_post_upscale(job):
+    payload = job.get("payload") or {}
+    cap_h = _standalone_cap_h(payload)
     asset, local = _load_source(job)
     out = f"/tmp/{job['id']}_up.mp4"
-    payload = job.get("payload") or {}
     apply_upscale(job, local, out, scale=payload.get("scale", 2),
-                  model=payload.get("model"))
+                  model=payload.get("model"), cap_h=cap_h)
     _finish(job, asset, out, "upscale")
     for p in (local, out):
         _rm(p)
@@ -1316,8 +1331,9 @@ def handle_post_h3_facefix(job):
 def handle_post_ltx_refine(job):
     """Standalone LTX 2.5 refine of one take — the free-standing twin of the
     `ltx_refine` chain op, same shape as post_upscale."""
-    asset, local = _load_source(job)
     payload = job.get("payload") or {}
+    cap_h = _standalone_cap_h(payload)
+    asset, local = _load_source(job)
     out = f"/tmp/{job['id']}_ltxref.mp4"
     # `target` arrives as [w, h] over JSON; the graph and the budget both want
     # a pair, and a bare list of the wrong length is a size nobody chose.
@@ -1333,7 +1349,7 @@ def handle_post_ltx_refine(job):
                      video_cfg=payload.get("video_cfg"),
                      prompt=payload.get("prompt") or "",
                      negative=payload.get("negative") or "",
-                     src_fps=asset.get("fps") or 24)
+                     src_fps=asset.get("fps") or 24, cap_h=cap_h)
     _finish(job, asset, out, "ltx_refine")
     for p in (local, out):
         _rm(p)

@@ -253,6 +253,12 @@ def handle_tts(job):
     el_voice = _el_voice(payload)
     bz_voice = _local_voice(payload)
     provider = _pick_provider(payload, clone, el_voice, bz_voice)
+    if payload.get("strict_provider"):
+        requested = str(payload.get("provider") or "").strip().lower()
+        if requested not in PROVIDERS or provider != requested or (clone and clone["provider"] != requested):
+            raise ValueError("Requested voice provider is unavailable or conflicts with the selected voice")
+        if provider == "elevenlabs" and not el_voice:
+            raise ValueError("ElevenLabs requires its API key and a selected ElevenLabs voice; fallback is disabled")
     # A cloned voice IS the provider choice — asking for a clone and then
     # naming a different provider is a contradiction, and rendering the stock
     # voice would sound like the clone simply failed.

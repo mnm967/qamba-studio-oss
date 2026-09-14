@@ -13,6 +13,25 @@ import handlers.post as post
 from handlers import render
 
 
+@pytest.mark.parametrize("kind,applier", [
+    (post.handle_post_upscale, "apply_upscale"),
+    (post.handle_post_ltx_refine, "apply_ltx_refine"),
+])
+def test_standalone_finishing_preserves_requested_portrait_height(monkeypatch, kind, applier):
+    seen = []
+    monkeypatch.setattr(post, "_load_source", lambda job: ({"id": "source", "fps": 24}, "in.mp4"))
+    monkeypatch.setattr(post, applier, lambda *a, **kw: seen.append(kw))
+    monkeypatch.setattr(post, "_finish", lambda *a, **kw: None)
+    monkeypatch.setattr(post, "_rm", lambda *a: None)
+    kind({"id": "job", "payload": {"cap_h": 2048}})
+    assert seen[-1]["cap_h"] == 2048
+    kind({"id": "job", "payload": {}})
+    assert seen[-1]["cap_h"] is None
+    for bad in [True, 0, 9000, "2048", 2048.5]:
+        with pytest.raises(ValueError, match="cap_h"):
+            kind({"id": "job", "payload": {"cap_h": bad}})
+
+
 # ------------------------------------------------------- the target frame ----
 def test_fit_samples_at_the_delivery_frame_rather_than_a_fixed_2x():
     """The point of the mode: an H3 take on a 1080p timeline is refined at
