@@ -32,6 +32,30 @@ def _encoders():
 ENC = _encoders() if shutil.which("ffmpeg") else ""
 
 
+def _nvenc_runs():
+    """Can h264_nvenc actually ENCODE here, not merely be listed?
+
+    `ffmpeg -encoders` reports what the binary was BUILT with, and Ubuntu's
+    is built with nvenc whether or not the machine has an NVIDIA driver — so
+    a listing-only guard runs the test on every Linux runner and it fails on
+    `Cannot load libcuda.so.1`. macOS never showed this: no macOS ffmpeg
+    carries nvenc at all, so the guard skipped for the right answer by
+    accident. Two frames of testsrc is the whole probe, and it is the same
+    distinction render_output.py's `hardware` flag is really asking about:
+    an encoder that is present and cannot open is not hardware support.
+    """
+    if "h264_nvenc" not in ENC:
+        return False
+    r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+                        "-i", f"testsrc=size={W}x{H}:rate=24", "-frames:v", "2",
+                        "-c:v", "h264_nvenc", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    return r.returncode == 0
+
+
+NVENC = _nvenc_runs() if shutil.which("ffmpeg") else False
+
+
 def _source(path, seconds=1):
     subprocess.run(
         ["ffmpeg", "-y", "-v", "error",
@@ -157,7 +181,7 @@ def test_nvenc_is_given_cq_and_never_crf():
     assert RO.encoder(spec) == "h264_nvenc"
 
 
-@pytest.mark.skipif("h264_nvenc" not in ENC, reason="no nvenc in this ffmpeg")
+@pytest.mark.skipif(not NVENC, reason="nvenc is not listed, or is listed and cannot open a session")
 def test_nvenc_actually_encodes():
     spec = RO.normalize({"format": "h264", "hardware": True})
     with tempfile.TemporaryDirectory() as d:
