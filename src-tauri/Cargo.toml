@@ -1,6 +1,6 @@
 [package]
 name = "qamba-studio-desktop"
-version = "0.1.0"
+version = "0.2.3"
 description = "Qamba Studio — AI video builder, desktop shell"
 authors = ["Qamba Studio"]
 edition = "2021"

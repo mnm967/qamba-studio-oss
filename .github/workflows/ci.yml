@@ -1,0 +1,37 @@
+# The fast gate: what a plain runner can prove in a few minutes, and nothing
+# it cannot. The UI suite reaches civitai.com in eight places and has been
+# measured 503-ing mid-run, so it is not here; the desktop tests want a Rust
+# toolchain and webkit2gtk on Linux and are partly about macOS behaviour, so
+# they run at release time.
+#
+# This file is byte-identical in the closed and the open repository on
+# purpose. It is the one piece of CI the open build carries, and a difference
+# between the two copies is a merge conflict on every edit to it.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm test
+      - run: npm run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: worker/requirements.txt
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg
+      - run: pip install -q pytest numpy pillow -r worker/requirements.txt
+      - run: python -m pytest tests/ -q -p no:cacheprovider
+        working-directory: worker
